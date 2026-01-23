@@ -1,0 +1,22 @@
+Objectif du projet :
+- comprendre le code source du jeu
+- réimplémenter une partie (potentiellement tout le code) dans un langage plus moderne (C)
+
+Etape 1:
+étude générale de l'Apple II et 6502 (processeur)
+
+Etape 2:
+Merlin (langage de macro)
+
+Etape 3:
+Lecture de l'ancien projet
+
+Etape 4:
+amélioration de l'ancien code
+
+Etape 5:
+Etude du code de Prince of Persia
+Réimplantation du code en code
+
+Etape 6:
+Rédaction du rapport (à paralléliser avec les autres étapes)
