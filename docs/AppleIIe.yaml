@@ -1,0 +1,40 @@
+Computer: Apple IIe
+Processor: 6502
+Frequency: 1Mhz
+Memory:
+ init: 64K
+ extended: 64K
+Screen:
+ Low Resolution:
+  Size: 40*48
+  Colors: 16
+ Hight Resolution:
+  Size: 280*192
+  Colors (Artifact):
+   Desc: Articact colors depend on the horizontal position
+   List:
+    - Black
+    - White
+    - Violet
+    - Green
+    - Blue
+    - Orange
+Sound:
+ Quality: 1 bit
+ Timing: Depends on the CPU
+Inputs:
+ - Keyboard
+ - Analogic joystick (Apple paddles)
+
+Memory layout:
+ $0000-$00FF: Zero Page
+ $0100-$01FF: Stack
+ $0200-$03FF: System Buffer (indirect IO)
+ $0400-$07FF: TEXT Page
+ $0800-$1FFF: Free
+ $2000-$3FFF: High Resolution Graphics Disaply Buffer 1
+ $4000-$5FFF: High Resolution Graphics Disaply Buffer 2
+ $6000-$BFFF: Free
+ $C000-$C0FF: Devices IO
+ $C100-$CFFF: Devices ROM
+ $D000-$FFFF: System ROM
