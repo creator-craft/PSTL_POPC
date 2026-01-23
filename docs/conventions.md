@@ -57,8 +57,8 @@ These conventions apply to all new code unless explicitly stated otherwise.
 
 ### 4.1 Indentation
 
-* Indentation must use **2 spaces**.
-* Tabs are strictly forbidden.
+* Indentation must use **1 tab**.
+* Spaces are strictly forbidden for indentation.
 
 ### 4.2 Braces
 
@@ -86,7 +86,7 @@ void myFunction(void) {
 
 * One space after keywords such as `if`, `while`, `for`, and `switch`.
 * No extra spaces inside parentheses.
-* One space after symbol `;` in `for` looop
+* One space after symbol `;` in `for` loop
 * Spaces between expressions in conditions
 
 ## 5. Comments
@@ -104,7 +104,7 @@ void myFunction(void) {
 Example:
 
 ```c
-// Initialize the counter before entering the loop
+// Use an external counter to preserve the result
 int counter = 0;
 ```
 
@@ -121,8 +121,6 @@ Example:
 
 ```c
 /*
- * myFunction
- *
  * Performs the main processing step of the module.
  *
  * Parameters:
