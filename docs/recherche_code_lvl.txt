@@ -303,4 +303,18 @@ CMDRIVON LDX SLOT : x = SLOT
          BNE :0
 :2       RTS
 
-//
+// résultats bibliothèque merlin d'entrée/sortie de fichier
+
+// recherche du rapport de l'année dernière + documentation de POP 
+
+24 écran de 30 blocks (10 * 3)
+block : 4 sections (A, B, C, D) --> image extraite de la base d'image
+Ordre d'affichage des block : C bas et gauche, B gauche, D centre, A centre, frontpiece (élément présent)
+
+Level:
+BlueType : 720 octets (24 * 30) chaque octets pour chaque block du level : identifiant de l'objet
+BlueSpec : 720 octets (24 * 30) : état de départ de l'objet ( & 0x1F : numero de l'image)
+LinkLok : 256 octets
+LinkMap : 256 octets
+Map : 96 octets (24 * 4) : GDHB
+positions du joueur et des personnages
