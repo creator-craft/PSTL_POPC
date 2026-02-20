@@ -36,7 +36,7 @@ int initiateLevel(LEVEL *level, char *level_file){
     if (s < 256){return 1;}
     s = fread(level->link_map, 1, 256, f);
     if (s < 256){return 1;}
-    s = fread(level->map, 1, 96, f);
+    s = fread(level->map, 4, 24, f);
     if (s < 96){return 1;}
     s = fread(level->character_position, 1, 20, f);
     level->c_p_length = s;
@@ -47,7 +47,6 @@ void destroyLevel(LEVEL *level){
     free(level->blue_spec);
     free(level->blue_type);
     free(level->character_position);
-    free(level->link_lok);
     free(level->link_lok);
     free(level->link_map);
     free(level->map);
