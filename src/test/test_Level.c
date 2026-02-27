@@ -8,8 +8,8 @@ int main(){
         return 1;
     }
     int r = initiateLevel(lvl, "LEVEL/LEVEL0");
-    if (r == 1){
-        printf("Err 2 : La récupération des données du niveau n'a pu être effectué\n");
+    if (r > 0){
+        printf("Err %d : La récupération des données du niveau n'a pu être effectué\n", r);
         return 1;
     }
     destroyLevel(lvl);

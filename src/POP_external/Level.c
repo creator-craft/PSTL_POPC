@@ -9,19 +9,19 @@ LEVEL *createLevel(char *level_file){
 }
 
 int initiateLevel(LEVEL *level, char *level_file){
-    FILE *f = fopen(level_file, 'r');
+    FILE *f = fopen(level_file, "r");
     if (f == NULL){return 1;}
     size_t s;
     s = fread(level->blue_type, 1, 720, f);
-    if (s < 720){return 1;}
+    if (s < 720){return 2;}
     s = fread(level->blue_spec, 1, 720, f);
-    if (s < 720){return 1;}
+    if (s < 720){return 3;}
     s = fread(level->link_lok, 1, 256, f);
-    if (s < 256){return 1;}
+    if (s < 256){return 4;}
     s = fread(level->link_map, 1, 256, f);
-    if (s < 256){return 1;}
+    if (s < 256){return 5;}
     s = fread(level->map, 4, 24, f);
-    if (s < 96){return 1;}
+    if (s < 24){return 6;}
     s = fread(level->character_position, 1, 20, f);
     level->c_p_length = s;
     return 0;
