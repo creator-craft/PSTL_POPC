@@ -1,0 +1,57 @@
+# Project configuration
+SRC_DIR     := src
+INC_DIR     := include
+BUILD_DIR   := build
+TARGET      := $(BUILD_DIR)/app
+
+CC          := gcc
+SDL_CFLAGS  := $(shell sdl2-config --cflags)
+SDL_LIBS    := $(shell sdl2-config --libs)
+
+# Source and object files
+SRCS        := $(wildcard src/test/*.c) $(wildcard src/POP_external/*.c)
+OBJS        := $(SRCS:src/*/%.c=src/*/%.o)
+
+# Common flags
+CFLAGS_COMMON := -std=c11 -Wall -Wextra -I$(INC_DIR) $(SDL_CFLAGS)
+LDFLAGS       := $(SDL_LIBS) -lSDL2_image -I$(INC_DIR)
+
+# Release / Debug flags
+CFLAGS_RELEASE := -Ofast -DNDEBUG
+CFLAGS_DEBUG   := -O0 -g -DDEBUG
+
+# Default target
+.PHONY: all
+all: release
+
+# Release build
+.PHONY: release
+release: CFLAGS := $(CFLAGS_COMMON) $(CFLAGS_RELEASE)
+release: $(TARGET)
+
+# Debug build
+.PHONY: debug
+debug: CFLAGS := $(CFLAGS_COMMON) $(CFLAGS_DEBUG)
+debug: $(TARGET)
+
+# Debug build and run
+.PHONY: run
+run: debug
+	./$(TARGET)
+
+# Link
+$(TARGET): $(OBJS)
+	$(CC) $(OBJS) -o $@ $(LDFLAGS)
+
+# Compile
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Build directory
+$(BUILD_DIR):
+	mkdir -p $(BUILD_DIR)
+
+# Clean
+.PHONY: clean
+clean:
+	rm -f ./$(BUILD_DIR)/*
