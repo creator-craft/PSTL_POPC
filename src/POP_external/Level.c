@@ -1,8 +1,9 @@
 #include "POP_external/Level.h"
 #include <stdint.h>
+#include <stdlib.h>
 #include <stdio.h>
 
-LEVEL *createLevel(char *level_file){
+LEVEL *createLevel(){
     LEVEL *level_res = malloc(sizeof(LEVEL));
     if (level_res == NULL){return NULL;}
     return level_res;
