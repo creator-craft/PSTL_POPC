@@ -5,22 +5,6 @@
 LEVEL *createLevel(char *level_file){
     LEVEL *level_res = malloc(sizeof(LEVEL));
     if (level_res == NULL){return NULL;}
-    level_res->map = malloc(24 * sizeof(*(level_res->map)));
-    uint8_t *blue_type = malloc(720);
-    uint8_t *blue_spec = malloc(720);
-    uint8_t *linklok = malloc(256);
-    uint8_t *linkmap = malloc(256);
-    uint8_t *character_position = malloc(20);
-    int err = (level_res->map == NULL);
-    err = err || !blue_type || !blue_spec;
-    err = err || !linklok || !linkmap;
-    err = err || !character_position;
-    if (err) {return NULL;}
-    level_res->blue_spec = blue_spec;
-    level_res->blue_type = blue_type;
-    level_res->character_position = character_position;
-    level_res->link_lok = linklok;
-    level_res->link_map = linkmap;
     return level_res;
 }
 
@@ -44,11 +28,5 @@ int initiateLevel(LEVEL *level, char *level_file){
 }
 
 void destroyLevel(LEVEL *level){
-    free(level->blue_spec);
-    free(level->blue_type);
-    free(level->character_position);
-    free(level->link_lok);
-    free(level->link_map);
-    free(level->map);
     free(level);
 }

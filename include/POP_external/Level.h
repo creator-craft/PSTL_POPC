@@ -13,17 +13,17 @@
  * 
  */
 typedef struct _level{
-    uint8_t *blue_type;
-    uint8_t *blue_spec;
-    uint8_t *link_lok;
-    uint8_t *link_map;
+    uint8_t blue_type[720];
+    uint8_t blue_spec[720];
+    uint8_t link_lok[256];
+    uint8_t link_map[256];
     struct {
         uint8_t left;
         uint8_t right;
         uint8_t up;
         uint8_t down;
-    } *map;
-    uint8_t *character_position;
+    } map[24];
+    uint8_t character_position[20];
     int c_p_length;
 } LEVEL;
 

@@ -12,5 +12,6 @@ int main(){
         printf("Err 2 : La récupération des données du niveau n'a pu être effectué\n");
         return 1;
     }
+    destroyLevel(lvl);
     return 0;
 }
