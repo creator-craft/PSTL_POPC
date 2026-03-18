@@ -12,7 +12,7 @@
  * the first positions are dedicated to child
  * 
  */
-typedef struct _level{
+typedef struct {
     uint8_t blue_type[720];
     uint8_t blue_spec[720];
     uint8_t link_lok[256];
@@ -23,26 +23,10 @@ typedef struct _level{
         uint8_t up;
         uint8_t down;
     } map[24];
-    uint8_t character_position[20];
-    int c_p_length;
-} LEVEL;
+    uint8_t unused[64];
+    uint8_t positions[192];
+} Level;
 
-/**
- * Allocate the memory used for the structure LEVEL
- */
-LEVEL* createLevel();
-
-/**
- * initiate the attributes of the LEVEL structure with the data
- * contained in the file level_file
- * return 0 if the initialisation were well done
- * 1 else
- */
-int initiateLevel(LEVEL *level, char *level_file);
-
-/**
- * Free the memory use by the LEVEL level
- */
-void destroyLevel(LEVEL *level);
+int loadLevel(Level *level, char *filename);
 
 #endif
