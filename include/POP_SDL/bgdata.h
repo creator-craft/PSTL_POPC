@@ -1,0 +1,78 @@
+#ifndef BGDATA_H
+#define BGDATA_H
+
+#include "stdint.h"
+
+// enum pieces {
+//   space = 0,
+//   floor = 1,
+//   spikes = 2,
+//   posts = 3,
+//   gate = 4,
+//   dpressplate = 5, // down,
+//   pressplate = 6,  // up
+//   panelwif = 7,    // w/floor
+//   pillarbottom = 8,
+//   pillartop = 9,
+//   flask = 10,
+//   loose = 11,
+//   panelwof = 12, // w/o floor
+//   mirror = 13,
+//   rubble = 14,
+//   upressplate = 15,
+//   exit = 16,
+//   exit2 = 17,
+//   slicer = 18,
+//   torch = 19,
+//   block = 20,
+//   bones = 21,
+//   sword = 22,
+//   window = 23,
+//   window2 = 24,
+//   archbot = 25,
+//   archtop1 = 26,
+//   archtop2 = 27,
+//   archtop3 = 28,
+//   archtop4 = 29
+// };
+
+static const uint8_t piecea[] = {0x00, 0x01, 0x05, 0x07, 0x0a, 0x01, 0x01, 0x0a,
+                                 0x10, 0x00, 0x01, 0x00, 0x00, 0x14, 0x20, 0x4b,
+                                 0x01, 0x00, 0x00, 0x01, 0x00, 0x97, 0x00, 0x01,
+                                 0x00, 0xa7, 0xa9, 0xaa, 0xac, 0xad};
+
+static const int8_t pieceay[] = {0, 0, 0, 0, 0, 1, 0,  0,  0, 0, 0,
+                                 0, 0, 0, 0, 0, 0, 0,  0,  0, 0, 0,
+                                 0, 0, 0, 0, 0, 0, -4, -4, -4};
+
+static const uint8_t pieceb[] = {0x00, 0x02, 0x06, 0x08, 0x0b, 0x1b, 0x02, 0x9e,
+                                 0x1a, 0x1c, 0x02, 0x00, 0x9e, 0x4a, 0x21, 0x1b,
+                                 0x4d, 0x4e, 0x02, 0x51, 0x84, 0x98, 0x02, 0x91,
+                                 0x92, 0x02, 0x00, 0x00, 0x00, 0x00};
+
+static const int8_t pieceby[] = {0,  0, 0, 0, 0,  1, 0, 3, 0, 3, 0, 0, 3, 0, 0,
+                                 -1, 0, 0, 0, -1, 2, 0, 0, 0, 0, 0, 0, 0, 0};
+
+static const uint8_t piecec[] = {0x00, 0x00, 0x00, 0x09, 0x0c, 0x00, 0x00, 0x9f,
+                                 0x00, 0x1d, 0x00, 0x00, 0x9f, 0x00, 0x00, 0x00,
+                                 0x4f, 0x50, 0x00, 0x00, 0x85, 0x00, 0x00, 0x93,
+                                 0x94, 0x00, 0x00, 0x00, 0x00, 0x00};
+
+static const uint8_t pieced[] = {0x00, 0x15, 0x15, 0x15, 0x15, 0x18, 0x19, 0x16,
+                                 0x15, 0x00, 0x15, 0x00, 0x17, 0x15, 0x2e, 0x4c,
+                                 0x15, 0x15, 0x15, 0x15, 0x86, 0x15, 0x15, 0x15,
+                                 0x15, 0x15, 0xab, 0x00, 0x00, 0x00};
+
+static const uint8_t fronti[] = {0x00, 0x00, 0x00, 0x45, 0x46, 0x00, 0x00, 0x46,
+                                 0x48, 0x49, 0x87, 0x00, 0x46, 0x0f, 0x13, 0x00,
+                                 0x00, 0x00, 0x00, 0x00, 0x83, 0x00, 0x00, 0x00,
+                                 0x00, 0xa8, 0x00, 0xae, 0xae, 0xae};
+
+static const int8_t fronty[] = {0,  0, 0, -1, 0, 0,  0, 0,   -1,  3,
+                                -3, 0, 0, -1, 0, 0,  0, 0,   0,   0,
+                                0,  0, 0, 0,  0, -1, 0, -36, -36, -36};
+
+static const uint8_t frontx[] = {0, 0, 0, 1, 3, 0, 0, 3, 1, 1, 2, 0, 3, 1, 0,
+                                 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0};
+
+#endif // BGDATA_H

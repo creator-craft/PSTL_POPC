@@ -9,7 +9,7 @@ SDL_CFLAGS  := $(shell sdl2-config --cflags)
 SDL_LIBS    := $(shell sdl2-config --libs) -lSDL2_image
 
 # Source and object files
-SRCS        := $(wildcard src/test/*.c) $(wildcard src/POP_external/*.c)
+SRCS        := $(wildcard src/POP_SDL/*.c)
 OBJS        := $(SRCS:src/*/%.c=src/*/%.o)
 
 # Common flags

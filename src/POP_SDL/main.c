@@ -1,8 +1,8 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-#include "POP/BGDATA.h"
-#include "POP_external/Level.h"
+#include "POP_SDL/bgdata.h"
+#include "POP_SDL/level.h"
 
 void add(SDL_Renderer *renderer, SDL_Texture *texture, int x, int y) {
   SDL_Rect dst_rect = {x, y};
@@ -64,7 +64,7 @@ int main() {
 
   Level lvl;
 
-  int r = loadLevel(&lvl, "LEVEL/LEVEL0");
+  int r = loadLevel(&lvl, "original_res/levels/LEVEL0");
   if (r) {
     printf("Err %d durint level init\n", r);
     return -1;
@@ -101,7 +101,7 @@ int main() {
 
   for (int i = 0; i < TEX_COUNT; i++) {
     char fname[64];
-    sprintf(fname, "res/IMG.BGTAB1.PAL/%i.png", i);
+    sprintf(fname, "res/images/IMG.BGTAB1.PAL/%i.png", i);
     SDL_Texture *texture = IMG_LoadTexture(renderer, fname);
     if (texture == NULL) {
       printf("Unable to read texture: %d\n", i);
@@ -116,7 +116,7 @@ int main() {
 
   for (int i = 0; i < TEX_COUNT2; i++) {
     char fname[64];
-    sprintf(fname, "res/IMG.BGTAB2.PAL/%i.png", i);
+    sprintf(fname, "res/images/IMG.BGTAB2.PAL/%i.png", i);
     SDL_Texture *texture = IMG_LoadTexture(renderer, fname);
     if (texture == NULL) {
       printf("Unable to read texture2: %d\n", i);
