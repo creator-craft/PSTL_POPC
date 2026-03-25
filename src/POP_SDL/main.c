@@ -20,9 +20,10 @@ void drawa(SDL_Renderer *renderer, SDL_Texture *textures[], SDL_Rect dst_rect,
 
   if (texture_idx == 0)
     return;
-  texture_idx = (texture_idx - 1);
+  texture_idx = texture_idx - 1;
 
-  add(renderer, textures[texture_idx], col * 128, row * 64);
+  int y_off = pieceay[objid] * 4;
+  add(renderer, textures[texture_idx], col * 128, row * 64 + y_off);
 }
 
 void drawb(SDL_Renderer *renderer, SDL_Texture *textures[], SDL_Rect dst_rect,
@@ -31,9 +32,10 @@ void drawb(SDL_Renderer *renderer, SDL_Texture *textures[], SDL_Rect dst_rect,
 
   if (texture_idx == 0)
     return;
-  texture_idx = (texture_idx - 1) % 128;
+  texture_idx = texture_idx - 1;
 
-  add(renderer, textures[texture_idx], col * 128, row * 64);
+  int y_off = pieceby[objid] * 4;
+  add(renderer, textures[texture_idx], col * 128, row * 64 + y_off);
 }
 
 void drawc(SDL_Renderer *renderer, SDL_Texture *textures[], SDL_Rect dst_rect,
@@ -43,7 +45,7 @@ void drawc(SDL_Renderer *renderer, SDL_Texture *textures[], SDL_Rect dst_rect,
 
   if (texture_idx == 0)
     return;
-  texture_idx = (texture_idx - 1) % 128;
+  texture_idx = texture_idx - 1;
 
   add(renderer, textures[texture_idx], col * 128, row * 64);
 }
@@ -55,9 +57,23 @@ void drawd(SDL_Renderer *renderer, SDL_Texture *textures[], SDL_Rect dst_rect,
 
   if (texture_idx == 0)
     return;
-  texture_idx = (texture_idx - 1) % 128;
+  texture_idx = texture_idx - 1;
 
   add(renderer, textures[texture_idx], col * 128, row * 64);
+}
+
+void drawfront(SDL_Renderer *renderer, SDL_Texture *textures[], SDL_Rect dst_rect,
+               int col, int row, int objid) {
+
+  int texture_idx = fronti[objid];
+
+  if (texture_idx == 0)
+    return;
+  texture_idx = texture_idx - 1;
+
+  int x_off = frontx[objid] * 32;
+  int y_off = fronty[objid] * 4;
+  add(renderer, textures[texture_idx], col * 128 + x_off, row * 64 + y_off);
 }
 
 int main() {
@@ -162,10 +178,11 @@ int main() {
         int objid = lvl.blue_type[row * 10 + col] &
                     0x1F; // 0x14: un bloc ABCD = { 0x00, 0x84, 0x85, 0x86 }
 
-        drawa(renderer, textures, dst_rect, col, row, objid);
+        drawc(renderer, textures, dst_rect, col, row, objid);
         drawb(renderer, textures, dst_rect, col, row, objid);
         drawd(renderer, textures, dst_rect, col, row, objid);
-        drawc(renderer, textures, dst_rect, col, row, objid);
+        drawa(renderer, textures, dst_rect, col, row, objid);
+        drawfront(renderer, textures, dst_rect, col, row, objid);
       }
 
     SDL_RenderPresent(renderer);
