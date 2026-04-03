@@ -1,7 +1,9 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <stdlib.h>
 
 #include "POP_SDL/bgdata.h"
+#include "POP_SDL/frameadv.h"
 #include "POP_SDL/level.h"
 
 uint8_t screen[320 * 192 / 8];
@@ -32,88 +34,106 @@ size_t loadImages() {
   return size + size2;
 }
 
-#define STA 1
-#define OR 2
+int loadLevel(Level *level, char *filename) {
+  FILE *f = fopen(filename, "r");
 
-void add(int tex_id, int x, int y, int op) {
-  uint8_t *images = tex_id >= 128 ? BGTAB2 : BGTAB1;
-  tex_id %= 128;
+  if (f == NULL)
+    return 1;
 
-  unsigned short offset = (((unsigned short)images[2 * tex_id + 2] << 8) |
-                           (unsigned short)images[2 * tex_id + 1]) -
-                          0x6000;
+  size_t size = fread(level, sizeof(Level), 1, f);
+  printf("s: %d %d\n", size, sizeof(Level));
 
-  unsigned char bytes_per_line = images[offset++],
-                lines_count = images[offset++];
+  if (size != 1)
+    return size;
 
-  for (int j = 0; j < lines_count; j++)
-    for (int i = 0; i < bytes_per_line; i++)
-      if ((y * 320 + j * 320 + x) / 8 + i >= 0 &&
-          (y * 320 + j * 320 + x) / 8 + i < sizeof(screen))
-        if (op == STA)
-          screen[(y * 320 + j * 320 + x) / 8 + i] = images[offset++];
-        else if (op == OR)
-          screen[(y * 320 + j * 320 + x) / 8 + i] |= images[offset++];
+  for (int row = 0; row < 3; row++) {
+    for (int col = 0; col < 10; col++)
+      printf("%02X:%02X ", level->blue_type[row * 10 + col] & ~0x1F,
+             level->blue_type[row * 10 + col] & 0x1F);
+    printf("\n");
+  }
 
-  // for (int j = 0; j < 64; j++)
-  //   for (int i = 0; i < 32; i++)
-  //     screen[(y * 320 * 64 + j * 320 + x * 32 + i) / 8] |= 1 << ((i) %
-  //     8);
+  return 0;
 }
 
-void drawa(int col, int row, int objid) {
-  int texture_idx = piecea[objid];
-
-  if (texture_idx == 0)
-    return;
-  texture_idx = texture_idx - 1;
-
-  int y_off = pieceay[objid];
-  add(texture_idx, col * 32, row * 64 + y_off, OR);
+static inline float clamp(float v, float mn, float mx) {
+  return v < mn ? mn : (v > mx ? mx : v);
 }
 
-void drawb(int col, int row, int objid) {
-  int texture_idx = pieceb[objid];
+void renderColoredScreen(SDL_Surface *surface) {
+  SDL_LockSurface(surface);
+  uint32_t *pixels = (uint32_t *)surface->pixels;
 
-  if (texture_idx == 0)
-    return;
-  texture_idx = texture_idx - 1;
+  static const float w[7] = {0.05f, 0.10f, 0.20f, 0.30f, 0.20f, 0.10f, 0.05f};
+  // static const float w[5] = {0.10f, 0.20f, 0.40f, 0.20f, 0.10f};
 
-  int y_off = pieceby[objid];
-  add(texture_idx, col * 32, row * 64 + y_off, OR);
+  for (int j = 0; j < 192; j++) {
+    const int row_off = (j * 320) / 8;
+    float sig[286] = {0};
+    int pal[286] = {0};
+
+    for (int i = 0; i < 40; i++) {
+      uint8_t b = screen[row_off + i];
+      int p = (b >> 7) & 1;
+      for (int k = 0; k < 7; k++) {
+        int idx = i * 7 + k + 3;
+        // int idx = i * 7 + k + 2;
+        sig[idx] = (b >> k) & 1 ? 1.0f : 0.0f;
+        pal[idx] = p;
+      }
+    }
+
+    for (int x = 0; x < 280; x++) {
+      float Y = 0.0f, I = 0.0f, Q = 0.0f;
+      for (int t = 0; t < 7; t++) {
+        // for (int t = 0; t < 5; t++) {
+        int idx = x + t;
+        int col = x + t - 3;
+        float s = sig[idx];
+        float sgn = (col & 1) ? -1.0f : 1.0f;
+        float ci = pal[idx] ? -0.70711f : 0.70711f;
+        Y += w[t] * s;
+        I += w[t] * s * sgn * ci;
+        Q += w[t] * s * sgn * 0.70711f;
+      }
+
+      I *= 2.0f;
+      Q *= 2.0f;
+
+      float R = clamp(Y + 0.9563f * I + 0.6210f * Q, 0, 1);
+      float G = clamp(Y - 0.2721f * I - 0.6474f * Q, 0, 1);
+      float B = clamp(Y - 1.1070f * I + 1.7046f * Q, 0, 1);
+
+      pixels[j * 280 + x] = 0xFF000000 | ((uint32_t)(R * 255.0f + 0.5f) << 16) |
+                            ((uint32_t)(G * 255.0f + 0.5f) << 8) |
+                            (uint32_t)(B * 255.0f + 0.5f);
+    }
+  }
+  SDL_UnlockSurface(surface);
 }
 
-void drawc(int col, int row, int objid) {
-  int texture_idx = piecec[objid];
-
-  if (texture_idx == 0)
-    return;
-  texture_idx = texture_idx - 1;
-
-  add(texture_idx, col * 32, row * 64, OR);
+void renderBnWScreen(SDL_Surface *surface) {
+  SDL_LockSurface(surface);
+  uint32_t *pixels = surface->pixels;
+  for (int j = 0; j < 192; j++)
+    for (int i = 0; i < 280 / 7; i++)
+      for (int k = 0; k < 7; k++)
+        pixels[j * 280 + i * 7 + k] =
+            screen[(j * 320) / 8 + i] & (1 << (k)) ? 0xFFFFFFFF : 0xFF000000;
+  SDL_UnlockSurface(surface);
 }
 
-void drawd(int col, int row, int objid) {
-  int texture_idx = pieced[objid];
+void updateScreen(SDL_Surface *apple_screen_surface,
+                  SDL_Surface *screen_surface, SDL_Rect screen_rect, Level *lvl,
+                  int screen_idx) {
+  // for (int row = 0; row < 3; row++)
+  //   for (int col = 0; col < 10; col++)
+  //     drawBlock(lvl, screen_idx, col, row);
+  drawBlock(lvl, screen_idx, 3, 1);
 
-  if (texture_idx == 0)
-    return;
-  texture_idx = texture_idx - 1;
+  renderBnWScreen(apple_screen_surface);
 
-  add(texture_idx, col * 32, row * 64, OR);
-}
-
-void drawfront(int col, int row, int objid) {
-
-  int texture_idx = fronti[objid];
-
-  if (texture_idx == 0)
-    return;
-  texture_idx = texture_idx - 1;
-
-  int x_off = frontx[objid];
-  int y_off = fronty[objid];
-  add(texture_idx, col * 32 + x_off, row * 64 + y_off, OR);
+  SDL_BlitScaled(apple_screen_surface, NULL, screen_surface, &screen_rect);
 }
 
 int main() {
@@ -148,7 +168,7 @@ int main() {
     return -1;
   }
 
-  int selected_tex = 0;
+  int screen_idx = 0;
   SDL_Rect screen_rect = {0, 0, 280 * 4, 192 * 4};
 
   SDL_Surface *screen_surface = SDL_GetWindowSurface(window);
@@ -162,6 +182,9 @@ int main() {
 
   for (int i = 0; i < sizeof(screen); i++)
     screen[i] = 0;
+
+  updateScreen(apple_screen_surface, screen_surface, screen_rect, &lvl,
+               screen_idx);
 
   int running = 1;
   while (running) {
@@ -177,33 +200,26 @@ int main() {
         current_key = event.key.keysym.sym;
         if (current_key == SDLK_ESCAPE)
           running = 0;
+
+        struct map_entry map = lvl.map[screen_idx];
+        int screen_goal = current_key == SDLK_LEFT    ? map.left
+                          : current_key == SDLK_RIGHT ? map.right
+                          : current_key == SDLK_DOWN  ? map.down
+                          : current_key == SDLK_UP    ? map.up
+                                                      : 0;
+
+        if (screen_goal > 0) {
+          memset(screen, 0, sizeof(screen));
+          screen_idx = screen_goal - 1;
+          printf("Goto %d\n", screen_idx);
+          updateScreen(apple_screen_surface, screen_surface, screen_rect, &lvl,
+                       screen_idx);
+        }
+
         break;
       }
     }
 
-    for (int row = 0; row < 3; row++)
-      for (int col = 0; col < 10; col++) {
-        int objid = lvl.blue_type[row * 10 + col] &
-                    0x1F; // 0x14: un bloc ABCD = { 0x00, 0x84, 0x85, 0x86 }
-
-        drawc(col, row, objid);
-        drawb(col, row, objid);
-        drawd(col, row, objid);
-        drawa(col, row, objid);
-        drawfront(col, row, objid);
-      }
-
-    SDL_LockSurface(apple_screen_surface);
-    uint32_t *pixels = apple_screen_surface->pixels;
-    for (int j = 0; j < 192; j++)
-      for (int i = 0; i < 280 / 7; i++)
-        for (int k = 0; k < 7; k++)
-          pixels[j * 280 + i * 7 + k] =
-              screen[(j * 320) / 8 + i] & (1 << (k)) ? 0xFFFFFFFF : 0xFF000000;
-    SDL_UnlockSurface(apple_screen_surface);
-
-    // SDL_FillRect(screen_surface, NULL, 0xFF00FFFF);
-    SDL_BlitScaled(apple_screen_surface, NULL, screen_surface, &screen_rect);
     SDL_UpdateWindowSurface(window);
     SDL_Delay(50);
   }

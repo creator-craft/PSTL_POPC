@@ -17,7 +17,7 @@ typedef struct {
     uint8_t blue_spec[720];
     uint8_t link_lok[256];
     uint8_t link_map[256];
-    struct {
+    struct map_entry {
         uint8_t left;
         uint8_t right;
         uint8_t up;
@@ -26,7 +26,5 @@ typedef struct {
     uint8_t unused[64];
     uint8_t positions[192];
 } Level;
-
-int loadLevel(Level *level, char *filename);
 
 #endif
