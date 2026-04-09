@@ -222,7 +222,7 @@ extern void trigspikes(void);
 extern void pushpp(void);
 extern void breakloose1(void);
 extern void breakloose(void);
-extern void animmobs(void);
+extern void animmobj(uint8_t x);
 extern void addmobs(void);
 extern void closeexit(void);
 extern void getspikes(void);
