@@ -1,11 +1,12 @@
 #include <stdio.h>
 
-#include "POP_SDL/frameadv.h"
 #include "POP_SDL/bgdata.h"
+#include "POP_SDL/frameadv.h"
 #include "POP_SDL/level.h"
 
 #define STA 1
 #define OR 2
+#define AND 3
 
 void add(int tex_id, int x, int y, int op) {
   uint8_t *images = tex_id >= 128 ? BGTAB2 : BGTAB1;
@@ -19,13 +20,16 @@ void add(int tex_id, int x, int y, int op) {
                 lines_count = images[offset++];
 
   for (int j = 0; j < lines_count; j++)
-    for (int i = 0; i < bytes_per_line; i++)
-      if ((y * 320 + j * 320 + x) / 8 + i >= 0 &&
-          (y * 320 + j * 320 + x) / 8 + i < sizeof(screen))
+    for (int i = 0; i < bytes_per_line; i++) {
+      int addr = ((y - j) * 320 + x) / 8 + i;
+      if (addr >= 0 && addr < sizeof(screen))
         if (op == STA)
-          screen[(y * 320 + j * 320 + x) / 8 + i] = images[offset++];
+          screen[addr] = images[offset++];
         else if (op == OR)
-          screen[(y * 320 + j * 320 + x) / 8 + i] |= images[offset++];
+          screen[addr] |= images[offset++];
+        else if (op == AND)
+          screen[addr] &= images[offset++];
+    }
 }
 
 void drawa(int col, int row, int objid) {
@@ -33,10 +37,16 @@ void drawa(int col, int row, int objid) {
 
   if (texture_idx == 0)
     return;
-  texture_idx = texture_idx - 1;
 
   int y_off = pieceay[objid];
-  add(texture_idx, col * 32, row * 64 + y_off, OR);
+  add(texture_idx - 1, col * 32, row * 64 + 60 + y_off, OR);
+}
+
+void drawma(int col, int row, int objid) {
+  int mask_idx = maska[objid];
+  if (mask_idx == 0)
+    return;
+  add(mask_idx - 1, col * 32, row * 64 + 60 + pieceay[objid], AND);
 }
 
 void drawb(int col, int row, int objid) {
@@ -44,10 +54,16 @@ void drawb(int col, int row, int objid) {
 
   if (texture_idx == 0)
     return;
-  texture_idx = texture_idx - 1;
 
   int y_off = pieceby[objid];
-  add(texture_idx, col * 32, row * 64 + y_off, OR);
+  add(texture_idx - 1, col * 32, row * 64 + 60 + y_off, OR);
+}
+
+void drawmb(int col, int row, int objid) {
+  int mask_idx = maskb[objid];
+  if (mask_idx == 0)
+    return;
+  add(mask_idx - 1, col * 32, row * 64 + 60 + pieceby[objid], AND);
 }
 
 void drawc(int col, int row, int objid) {
@@ -55,9 +71,8 @@ void drawc(int col, int row, int objid) {
 
   if (texture_idx == 0)
     return;
-  texture_idx = texture_idx - 1;
 
-  add(texture_idx, col * 32, row * 64, OR);
+  add(texture_idx - 1, col * 32, row * 64 + 63, OR);
 }
 
 void drawd(int col, int row, int objid) {
@@ -65,22 +80,19 @@ void drawd(int col, int row, int objid) {
 
   if (texture_idx == 0)
     return;
-  texture_idx = texture_idx - 1;
 
-  add(texture_idx, col * 32, row * 64, OR);
+  add(texture_idx - 1, col * 32, row * 64 + 63, OR);
 }
 
 void drawfront(int col, int row, int objid) {
-
   int texture_idx = fronti[objid];
 
   if (texture_idx == 0)
     return;
-  texture_idx = texture_idx - 1;
 
   int x_off = frontx[objid];
   int y_off = fronty[objid];
-  add(texture_idx, col * 32 + x_off, row * 64 + y_off, OR);
+  add(texture_idx - 1, col * 32 + x_off * 8, row * 64 + 60 + y_off, OR);
 }
 
 void drawBlock(Level *lvl, int screen_idx, int col, int row) {
@@ -89,7 +101,9 @@ void drawBlock(Level *lvl, int screen_idx, int col, int row) {
   printf("%d\n", objid);
   drawc(col, row, objid);
   drawb(col, row, objid);
+  drawmb(col, row, objid);
   drawd(col, row, objid);
   drawa(col, row, objid);
+  drawma(col, row, objid);
   drawfront(col, row, objid);
 }

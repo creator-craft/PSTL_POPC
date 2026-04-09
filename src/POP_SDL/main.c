@@ -126,10 +126,10 @@ void renderBnWScreen(SDL_Surface *surface) {
 void updateScreen(SDL_Surface *apple_screen_surface,
                   SDL_Surface *screen_surface, SDL_Rect screen_rect, Level *lvl,
                   int screen_idx) {
-  // for (int row = 0; row < 3; row++)
-  //   for (int col = 0; col < 10; col++)
-  //     drawBlock(lvl, screen_idx, col, row);
-  drawBlock(lvl, screen_idx, 3, 1);
+  for (int row = 2; row >= 0; row--)
+    for (int col = 0; col < 10; col++)
+      drawBlock(lvl, screen_idx, col, row);
+  // drawBlock(lvl, screen_idx, 3, 1);
 
   renderBnWScreen(apple_screen_surface);
 
