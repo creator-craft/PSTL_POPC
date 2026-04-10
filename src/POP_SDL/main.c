@@ -1,5 +1,4 @@
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
 #include <stdlib.h>
 
 #include "POP_SDL/bgdata.h"
@@ -129,7 +128,8 @@ void updateScreen(SDL_Surface *apple_screen_surface,
   for (int row = 2; row >= 0; row--)
     for (int col = 0; col < 10; col++)
       drawBlock(lvl, screen_idx, col, row);
-  // drawBlock(lvl, screen_idx, 3, 1);
+
+  // drawTest();
 
   renderBnWScreen(apple_screen_surface);
 
@@ -154,16 +154,10 @@ int main() {
   if (SDL_Init(SDL_INIT_VIDEO))
     return -1;
 
-  if ((IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG) != IMG_INIT_PNG) {
-    SDL_Quit();
-    return -1;
-  }
-
   SDL_Window *window =
       SDL_CreateWindow("Prince Of Persia", 0, 0, 280 * 4, 192 * 4,
                        0); // SDL_WINDOW_MAXIMIZED
   if (window == NULL) {
-    IMG_Quit();
     SDL_Quit();
     return -1;
   }
@@ -226,7 +220,6 @@ int main() {
 
   SDL_FreeSurface(apple_screen_surface);
   SDL_DestroyWindow(window);
-  IMG_Quit();
   SDL_Quit();
 
   return EXIT_SUCCESS;
