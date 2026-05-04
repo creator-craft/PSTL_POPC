@@ -8,7 +8,7 @@ void fastlaySTA(int img, int x, int y);
 void layrsave();
 void addpeel();
 void lay();
-void fastmask();
+void fastmask(int, int, int);
 void cls();
 void zeropeel();
 void drawwipe();
