@@ -131,7 +131,7 @@ void updateScreen(SDL_Surface *apple_screen_surface,
 
   // drawTest();
 
-  renderBnWScreen(apple_screen_surface);
+  renderColoredScreen(apple_screen_surface);
 
   SDL_BlitScaled(apple_screen_surface, NULL, screen_surface, &screen_rect);
 }
