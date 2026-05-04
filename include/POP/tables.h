@@ -3,7 +3,7 @@
 
 /*
  * tables.h
- * Traduction de TABLES.S — Tables de lookup statiques
+ * Traduction de TABLES.S : Tables de lookup statiques
  * Source originale : Jordan Mechner, 1989
  * Module chargé à $e00 (main RAM) sur Apple II.
  *
@@ -115,7 +115,7 @@ extern const uint8_t Mult10[16];
 extern const uint8_t Mult7[16];
 
 /*
- * Mult30[32] — table 16 bits (uint16_t)
+ * Mult30[32] : table 16 bits (uint16_t)
  * Index  : numéro d'écran (0-31)
  * Retour : offset en octets dans le blueprint (valeur × 30)
  *

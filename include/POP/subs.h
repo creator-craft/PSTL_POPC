@@ -3,7 +3,7 @@
 
 /*
  * subs.h
- * Traduction de SUBS.S — Sous-routines de gameplay et scènes cinématiques
+ * Traduction de SUBS.S : Sous-routines de gameplay et scènes cinématiques
  * Source originale : Jordan Mechner, 1989
  * Module chargé à $e000 (main LC bank 1) sur Apple II.
  *
@@ -75,13 +75,13 @@
 
 
 /* -----------------------------------------------------------------------
- * ROUTINES PUBLIQUES — Jump table à $e000
+ * ROUTINES PUBLIQUES : Jump table à $e000
  * ----------------------------------------------------------------------- */
 
 /* --- Torches et objets --- */
 
 /*
- * ADDTORCHES — Ajoute toutes les torches, flacons et épées de VisScrn
+ * ADDTORCHES : Ajoute toutes les torches, flacons et épées de VisScrn
  * à la liste de transition (trans list), pour qu'ils soient animés.
  * Parcourt les 30 blocs de VisScrn et appelle trigtorch/trigflask/trigsword.
  */
@@ -90,21 +90,21 @@ void ADDTORCHES(void);
 /* --- Affichage --- */
 
 /*
- * DOFLASHON — Affiche un flash lo-res coloré (lightning).
+ * DOFLASHON : Affiche un flash lo-res coloré (lightning).
  * Efface l'écran lo-res avec la couleur lightcolor, attend VBL,
  * bascule en mode lo-res. En C : effet SDL2 (overlay coloré).
  */
 void DOFLASHON(void);
 
 /*
- * DOFLASHOFF — Revient en mode hi-res après le flash.
+ * DOFLASHOFF : Revient en mode hi-res après le flash.
  * Attend VBL, rebascule sur la bonne page hi-res.
  * En C : supprime l'overlay coloré.
  */
 void DOFLASHOFF(void);
 
 /*
- * PAGEFLIP — Affiche la page cachée et bascule PAGE.
+ * PAGEFLIP : Affiche la page cachée et bascule PAGE.
  *
  * Apple II : alterne entre page 1 ($2000) et page 2 ($4000).
  * En C : SDL_RenderPresent() ou équivalent.
@@ -114,14 +114,14 @@ void DOFLASHOFF(void);
 void PAGEFLIP(void);
 
 /*
- * LRCLSE — Efface l'écran lo-res seulement si la couleur a changé.
+ * LRCLSE : Efface l'écran lo-res seulement si la couleur a changé.
  * In: A = nouvelle couleur (byte value)
  * Optimisation : compare avec scrncolor et ne fait rien si identique.
  */
 void LRCLSE(uint8_t color);
 
 /*
- * PAUSE — Boucle d'attente active.
+ * PAUSE : Boucle d'attente active.
  * In: A = durée (1-256, où 256 est codé comme 0 en uint8_t)
  * En C : SDL_Delay() ou boucle équivalente.
  */
@@ -130,7 +130,7 @@ void PAUSE(uint8_t duration);
 /* --- Scènes cinématiques --- */
 
 /*
- * PLAYCUT — Joue une scène cinématique pré-enregistrée.
+ * PLAYCUT : Joue une scène cinématique pré-enregistrée.
  * In: A = numéro de scène (0-8)
  * Appelle PlayCut0 à PlayCut8 via table d'adresses self-modifiante.
  * En C : switch/case ou table de pointeurs de fonctions.
@@ -151,7 +151,7 @@ void PlayCut8(void);   /* princesse envoie la souris */
 /* --- Sons --- */
 
 /*
- * ADDLOWERSOUND — Ajoute le son d'un portail qui se ferme,
+ * ADDLOWERSOUND : Ajoute le son d'un portail qui se ferme,
  * seulement si le portail est visible à l'écran.
  * In: A = état du portail (pair = pas de son, impair = son)
  */
@@ -160,9 +160,9 @@ void ADDLOWERSOUND(uint8_t state);
 /* --- Objets --- */
 
 /*
- * REMOVEOBJ — Retire un objet du blueprint (remplace par floor).
+ * REMOVEOBJ : Retire un objet du blueprint (remplace par floor).
  *
- * In: A = type de potion (lastpotion) — négatif = épée, 1-5 = potions
+ * In: A = type de potion (lastpotion) : négatif = épée, 1-5 = potions
  * Met le bloc courant (BlueType),y à "floor", BlueSpec à 0,
  * marque le bloc pour redraw (markwipe + markred).
  * Appelé depuis PickItUp (CTRL.S).
@@ -172,7 +172,7 @@ void REMOVEOBJ(int8_t lastpotion_type);
 /* --- Physique --- */
 
 /*
- * ADDFALL — Applique la vitesse de chute à la position du personnage.
+ * ADDFALL : Applique la vitesse de chute à la position du personnage.
  *
  * CharY += CharYVel
  * Si CharAction == 4 (freefall) : applique aussi CharXVel via addcharx,
@@ -183,7 +183,7 @@ void REMOVEOBJ(int8_t lastpotion_type);
 void ADDFALL(void);
 
 /*
- * GRAVITY — Accélère la chute si CharAction == 4 (freefall).
+ * GRAVITY : Accélère la chute si CharAction == 4 (freefall).
  *
  * Normal    : CharYVel += AccelGravity (3), plafonné à TermVelocity (33)
  * Légèreté  : CharYVel += WtlessGravity (1), plafonné à WtlessTermVel (4)
@@ -196,7 +196,7 @@ void GRAVITY(void);
 /* --- Initialisation --- */
 
 /*
- * SETINITIALS — Définit l'état initial de tous les gadgets du niveau.
+ * SETINITIALS : Définit l'état initial de tous les gadgets du niveau.
  *
  * Parcourt tous les écrans du niveau (INFO screens) et appelle
  * getinitobj() pour chaque bloc. Écrit l'état initial dans BlueSpec.
@@ -205,7 +205,7 @@ void GRAVITY(void);
 void SETINITIALS(void);
 
 /*
- * STARTKID — Place le joueur à sa position de départ pour ce niveau.
+ * STARTKID : Place le joueur à sa position de départ pour ce niveau.
  *
  * Lit KidStartScrn, KidStartBlock, KidStartFace depuis le blueprint (INFO).
  * Gère les cas spéciaux : level 1 (pas d'épée, stepfall), level 3
@@ -215,7 +215,7 @@ void SETINITIALS(void);
 void STARTKID(void);
 
 /*
- * STARTKID1 — Fin de l'initialisation du joueur (appelable séparément).
+ * STARTKID1 : Fin de l'initialisation du joueur (appelable séparément).
  *
  * Aligne CharY sur FloorY[CharBlockY+1].
  * Remet à zéro : CharXVel, CharYVel, weightless, invert, jarabove,
@@ -226,7 +226,7 @@ void STARTKID(void);
 void STARTKID1(void);
 
 /*
- * INITIALGUARDS — Calcule les positions X initiales de tous les gardes
+ * INITIALGUARDS : Calcule les positions X initiales de tous les gardes
  * pour le niveau courant (GdStartX[]).
  *
  * Parcourt les 24 écrans possibles. Pour chaque garde dont GdStartBlock
@@ -236,7 +236,7 @@ void STARTKID1(void);
 void INITIALGUARDS(void);
 
 /*
- * MIRAPPEAR — Fait apparaître le miroir dans le blueprint (level 4).
+ * MIRAPPEAR : Fait apparaître le miroir dans le blueprint (level 4).
  *
  * Appelé par MOVER quand l'exit est ouvert sur level 4.
  * Remplace le bloc (MIRSCRN, MIRX, MIRY) par "mirror".
@@ -246,7 +246,7 @@ void MIRAPPEAR(void);
 /* --- Trancheuses --- */
 
 /*
- * ADDSLICERS — Ajoute toutes les trancheuses de CharBlockY au niveau courant
+ * ADDSLICERS : Ajoute toutes les trancheuses de CharBlockY au niveau courant
  * à la liste de transition, en les synchronisant.
  *
  * Gère le timer de chaque trancheuse : ne re-déclenche pas une trancheuse
@@ -258,13 +258,13 @@ void ADDSLICERS(void);
 /* --- Divers --- */
 
 /*
- * CRUMBLE — Sur level 13 : déclenche l'effondrement des planchers
+ * CRUMBLE : Sur level 13 : déclenche l'effondrement des planchers
  * instables au-dessus des écrans 23 et 16 à l'entrée du joueur.
  */
 void CRUMBLE(void);
 
 /*
- * DEADENEMY — Réaction à la mort de l'adversaire.
+ * DEADENEMY : Réaction à la mort de l'adversaire.
  *
  * Level 0 (démo) : milestone=1 (démarre partie 2 de la démo)
  * Level 13 (vizir) : lance la musique de victoire, ouvre l'exit,
@@ -274,7 +274,7 @@ void CRUMBLE(void);
 void DEADENEMY(void);
 
 /*
- * SHOWTIME — Affiche le temps restant si timerequest != 0.
+ * SHOWTIME : Affiche le temps restant si timerequest != 0.
  *
  * Gère le compte à rebours de la dernière minute (affichage secondes).
  * Met message=TimeMsg et msgtimer pour déclencher l'affichage.
@@ -282,7 +282,7 @@ void DEADENEMY(void);
 void SHOWTIME(void);
 
 /*
- * DEMO — Contrôle le joueur pendant la démo automatique.
+ * DEMO : Contrôle le joueur pendant la démo automatique.
  *
  * Appelé depuis PLAYERCTRL (CTRL.S) quand level==0.
  * Lit DemoProg1 (table de commandes avec timestamps) via AutoPlayback.
@@ -295,7 +295,7 @@ void DEMO(void);
  * ----------------------------------------------------------------------- */
 
 /*
- * play — Boucle de playback pour les scènes (version simplifiée de MainLoop).
+ * play : Boucle de playback pour les scènes (version simplifiée de MainLoop).
  *
  * In: A = nombre de frames à jouer
  * Appelle dans l'ordre : rnd, pause(SPEED), strobe, NextFrame, flashon,
@@ -309,7 +309,7 @@ void play(uint8_t frames);
 
 
 /* -----------------------------------------------------------------------
- * UTILITAIRES DE SCÈNES — Positionnement des personnages
+ * UTILITAIRES DE SCÈNES : Positionnement des personnages
  *
  * Ces routines placent les personnages dans leur position de départ
  * pour chaque scène cinématique. "P" = princess (Shad), "K" = kid,
@@ -340,20 +340,20 @@ void kjumpseq(uint8_t seq);  /* alias de vjumpseq */
  * ----------------------------------------------------------------------- */
 
 /*
- * PlaySong — Joue une chanson dans la salle de la princesse.
+ * PlaySong : Joue une chanson dans la salle de la princesse.
  * In: A = numéro de chanson
  * Interrompue par bouton ou touche.
  */
 void PlaySong(uint8_t song_num);
 
 /*
- * PlaySongX — Joue une chanson OU attend X frames si le son est coupé.
+ * PlaySongX : Joue une chanson OU attend X frames si le son est coupé.
  * In: A = numéro de chanson, X = frames d'attente si son coupé
  */
 void PlaySongX(uint8_t song_num, uint8_t silent_frames);
 
 /*
- * PlaySongI — Comme PlaySongX mais une touche démarre une nouvelle partie.
+ * PlaySongI : Comme PlaySongX mais une touche démarre une nouvelle partie.
  */
 void PlaySongI(uint8_t song_num, uint8_t silent_frames);
 
@@ -368,7 +368,7 @@ void addglass1(uint8_t state); /* Ajoute le sablier avec état explicite */
  * ----------------------------------------------------------------------- */
 
 /*
- * DemoProg1 — Séquence de commandes pré-enregistrées pour la démo.
+ * DemoProg1 : Séquence de commandes pré-enregistrées pour la démo.
  *
  * Format : paires (frame#, commande) terminées par ENDPROG ou ENDDEMO.
  * frame# = numéro de frame absolu depuis le début de la démo.

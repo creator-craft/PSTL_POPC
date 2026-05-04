@@ -3,7 +3,7 @@
 
 /*
  * auto.h
- * Traduction de AUTO.S — Intelligence artificielle et gestion des transitions
+ * Traduction de AUTO.S : Intelligence artificielle et gestion des transitions
  * Source originale : Jordan Mechner, 1989
  * Module chargé à l'adresse $5400 (aux mem) sur Apple II.
  *
@@ -21,7 +21,7 @@
 #include "gameeq.h"
 
 /* -----------------------------------------------------------------------
- * ROUTINES PUBLIQUES — Jump table à $5400
+ * ROUTINES PUBLIQUES : Jump table à $5400
  * Ces 8 fonctions sont appelées depuis les autres modules via la jump table.
  * ----------------------------------------------------------------------- */
 
@@ -58,7 +58,7 @@ void CUT(uint8_t direction);
 
 
 /* -----------------------------------------------------------------------
- * CONSTANTES — Seuils de découpe d'écran (cut edges)
+ * CONSTANTES : Seuils de découpe d'écran (cut edges)
  * Définissent les limites au-delà desquelles un personnage transite.
  * Basés sur ScrnTop/ScrnBottom/ScrnLeft/ScrnRight définis dans eq.h.
  * ----------------------------------------------------------------------- */
@@ -70,7 +70,7 @@ void CUT(uint8_t direction);
 
 
 /* -----------------------------------------------------------------------
- * CONSTANTES — Emplacements des objets spéciaux dans les niveaux
+ * CONSTANTES : Emplacements des objets spéciaux dans les niveaux
  * Codés en dur dans AUTO.S, liés à la structure des niveaux du jeu.
  * ----------------------------------------------------------------------- */
 #define FLASK_SCRN   24   /* screen de la potion (niveau 5) */
@@ -89,7 +89,7 @@ void CUT(uint8_t direction);
 
 
 /* -----------------------------------------------------------------------
- * CONSTANTES — Seuils et plages de combat
+ * CONSTANTES : Seuils et plages de combat
  * Distances en pixels (système 140px) utilisées dans la logique de combat.
  * ----------------------------------------------------------------------- */
 
@@ -211,7 +211,7 @@ extern const uint8_t shadpos12[8];   /* niveau 12 screen 15 : chute depuis le ha
 
 
 /* -----------------------------------------------------------------------
- * ROUTINES INTERNES — Programmes par personnage
+ * ROUTINES INTERNES : Programmes par personnage
  * Non exposées dans la jump table, mais définies dans auto.c.
  * ----------------------------------------------------------------------- */
 
@@ -231,7 +231,7 @@ void FinalShad(void);     /* niveau 12 (combat final) : logique de fusion */
 
 
 /* -----------------------------------------------------------------------
- * ROUTINES INTERNES — Combat
+ * ROUTINES INTERNES : Combat
  * ----------------------------------------------------------------------- */
 
 /* Teste si le coup d'épée de Char touche Op (frames 153/154) */
@@ -251,7 +251,7 @@ void MaybeStrike(void);   /* décide de frapper selon strikeprob */
 
 
 /* -----------------------------------------------------------------------
- * ROUTINES INTERNES — Commandes joystick simulées
+ * ROUTINES INTERNES : Commandes joystick simulées
  *
  * L'IA simule un joueur humain en écrivant directement dans les variables
  * de joystick (JSTKX, JSTKY, btn, clrF, clrB, clrU, clrD, clrbtn).
@@ -276,7 +276,7 @@ void DoRelBtn(void);      /* relâcher bouton (btn=0) */
 
 
 /* -----------------------------------------------------------------------
- * ROUTINES INTERNES — Transitions d'écran
+ * ROUTINES INTERNES : Transitions d'écran
  * ----------------------------------------------------------------------- */
 
 /* Vérifie si le personnage est en train de sortir de l'écran courant.
@@ -297,7 +297,7 @@ void getgdstrength(void);
 
 
 /* -----------------------------------------------------------------------
- * ROUTINES INTERNES — Utilitaires
+ * ROUTINES INTERNES : Utilitaires
  * ----------------------------------------------------------------------- */
 
 /* Retourne X = guardprog, A = nombre aléatoire (appelle rnd) */
@@ -332,7 +332,7 @@ void Cdown(void);
 
 
 /* -----------------------------------------------------------------------
- * DIRECTION CONSTANTS — utilisées par CUT et cutchar
+ * DIRECTION CONSTANTS : utilisées par CUT et cutchar
  * ----------------------------------------------------------------------- */
 #define CUT_LEFT   0
 #define CUT_RIGHT  1

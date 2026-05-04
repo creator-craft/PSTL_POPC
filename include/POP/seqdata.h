@@ -3,7 +3,7 @@
 
 /*
  * seqdata.h
- * Traduction de SEQDATA.S — Points d'entrée et instructions de la table de séquences
+ * Traduction de SEQDATA.S : Points d'entrée et instructions de la table de séquences
  * Source originale : Jordan Mechner, 1989
  *
  * Ce fichier ne contient QUE des #define.
@@ -119,7 +119,7 @@
 #define resheathe      92    /* rengainer l'épée */
 #define fastsheathe    93    /* rengainer rapidement */
 
-/* Animations de la princesse (P) et du vizir (V) — scènes cinématiques */
+/* Animations de la princesse (P) et du vizir (V) : scènes cinématiques */
 #define Pstand         94    /* princesse debout */
 #define Vstand         95    /* vizir debout */
 #define Vapproach      96    /* vizir approche */
@@ -199,7 +199,7 @@
  * Constantes de Fcheck (5e octet de chaque frame de séquence)
  * Dupliquées ici depuis SEQDATA.S pour cohérence (aussi dans gameeq.h).
  */
-#define fcheckmark    0x40   /* %01000000 — floor check requis ce frame */
-#define fcentermark   0x1F   /* %00011111 — position X du centre du personnage */
+#define fcheckmark    0x40   /* %01000000 : floor check requis ce frame */
+#define fcentermark   0x1F   /* %00011111 : position X du centre du personnage */
 
 #endif /* SEQDATA_H */

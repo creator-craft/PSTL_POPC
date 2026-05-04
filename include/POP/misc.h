@@ -3,7 +3,7 @@
 
 /*
  * misc.h
- * Traduction de MISC.S — Routines diverses de haut niveau
+ * Traduction de MISC.S : Routines diverses de haut niveau
  * Source originale : Jordan Mechner, 1989
  * Module chargé à $f900 (aux LC bank 1) sur Apple II.
  *
@@ -39,11 +39,11 @@
 #define GFIGHTTHRES  (28 * 4)
 
 /* -----------------------------------------------------------------------
- * ROUTINES PUBLIQUES — Jump table à $f900
+ * ROUTINES PUBLIQUES : Jump table à $f900
  * ----------------------------------------------------------------------- */
 
 /*
- * VANISHCHAR — Fait disparaître le personnage courant (Char).
+ * VANISHCHAR : Fait disparaître le personnage courant (Char).
  *
  * Met CharFace=86 (code "pas de personnage"), CharAction=0,
  * CharLife=0. Calcule ChgOppStr = -OppStrength (tue l'adversaire).
@@ -53,14 +53,14 @@
 void VANISHCHAR(void);
 
 /*
- * MOVEMUSIC — Déplace 1K de données musicales de $5000 main vers aux LC.
+ * MOVEMUSIC : Déplace 1K de données musicales de $5000 main vers aux LC.
  * Opération de chargement Apple II → ignorée en C (les données sont
  * déjà en mémoire à l'initialisation).
  */
 void MOVEMUSIC(void);
 
 /*
- * FIRSTGUARD — Empêche le joueur de passer à travers un garde en garde.
+ * FIRSTGUARD : Empêche le joueur de passer à travers un garde en garde.
  *
  * Si EnemyAlert >= 2 et l'adversaire est en garde sur le même plan,
  * face au joueur, à moins de 15 pixels derrière lui :
@@ -71,7 +71,7 @@ void MOVEMUSIC(void);
 void FIRSTGUARD(void);
 
 /*
- * MARKMETERS — Marque les 3 blocs de la barre de force du joueur
+ * MARKMETERS : Marque les 3 blocs de la barre de force du joueur
  * et les 2 blocs de la barre de l'adversaire pour redraw.
  */
 void MARKMETERS(void);
@@ -83,7 +83,7 @@ void MARKKIDMETER(void);
 void MARKOPPMETER(void);
 
 /*
- * POTIONEFFECT — Applique l'effet d'une potion bue.
+ * POTIONEFFECT : Applique l'effet d'une potion bue.
  *
  * Ne s'applique que si CharID == 0 (le joueur) et lastpotion != 0.
  *
@@ -98,7 +98,7 @@ void MARKOPPMETER(void);
 void POTIONEFFECT(void);
 
 /*
- * MOUSERESCUE — Fait apparaître la souris pour sauver le joueur (level 8).
+ * MOUSERESCUE : Fait apparaître la souris pour sauver le joueur (level 8).
  *
  * Crée la souris (CharID=24) à droite de l'écran, la met en marche
  * vers la gauche, et la sauvegarde dans Shad. Appelé depuis misctimers
@@ -107,7 +107,7 @@ void POTIONEFFECT(void);
 void MOUSERESCUE(void);
 
 /*
- * STABCHAR — Réaction d'un personnage à une attaque d'épée.
+ * STABCHAR : Réaction d'un personnage à une attaque d'épée.
  *
  * Si CharSword==2 (en garde) : décrémente la force (decstr).
  *   → Si force tombe à 0 : tue le personnage (stabkill ou fightfall)
@@ -121,7 +121,7 @@ void MOUSERESCUE(void);
 void STABCHAR(void);
 
 /*
- * UNHOLY — Si le shadowman meurt, le joueur meurt aussi (et vice versa).
+ * UNHOLY : Si le shadowman meurt, le joueur meurt aussi (et vice versa).
  *
  * Uniquement sur level 12 quand CharID+OpID == 1 (kid vs shadow).
  * Applique -100 force + 5 flashs blancs + son Splat.
@@ -129,7 +129,7 @@ void STABCHAR(void);
 void UNHOLY(void);
 
 /*
- * REFLECTION — Gère le reflet du joueur dans le miroir (level 4).
+ * REFLECTION : Gère le reflet du joueur dans le miroir (level 4).
  *
  * Si createshad == 0xFF : le reflet prend vie comme shadowman
  * (appelle CreateShad). Sinon, si le joueur est devant le miroir,
@@ -141,7 +141,7 @@ void UNHOLY(void);
 void REFLECTION(void);
 
 /*
- * BONESRISE — Fait apparaître le squelette vivant (level 3).
+ * BONESRISE : Fait apparaître le squelette vivant (level 3).
  *
  * Déclenché quand le joueur atteint le bloc SKELTRIG sur SKELSCRN.
  * Remplace les os (bones) par un sol normal, crée un garde de type
@@ -150,7 +150,7 @@ void REFLECTION(void);
 void BONESRISE(void);
 
 /*
- * DECSTR — Décrémente la force du personnage courant de A.
+ * DECSTR : Décrémente la force du personnage courant de A.
  *
  * In: A = quantité à retrancher (1-100, non nul)
  * Out: non-zéro si le personnage survit, zéro s'il meurt
@@ -163,7 +163,7 @@ void BONESRISE(void);
 uint8_t DECSTR(uint8_t amount);
 
 /*
- * DOSAVEGAME — Sauvegarde la partie sur disque.
+ * DOSAVEGAME : Sauvegarde la partie sur disque.
  *
  * Ne sauvegarde que si level >= FirstSideB (3).
  * Copie origstrength, FrameCount, NextTimeMsg dans les zones Sav*
@@ -173,7 +173,7 @@ uint8_t DECSTR(uint8_t amount);
 void DOSAVEGAME(void);
 
 /*
- * LOADLEVELX — Charge un niveau depuis le disque.
+ * LOADLEVELX : Charge un niveau depuis le disque.
  *
  * In: X = numéro de niveau (0-14)
  * Consulte les tables bgset1/bgset2/chset/bluepTRKlst/bluepREGlst
@@ -184,7 +184,7 @@ void DOSAVEGAME(void);
 void LOADLEVELX(uint8_t level_num);
 
 /*
- * CHECKALERT — Calcule EnemyAlert (visibilité mutuelle joueur/garde).
+ * CHECKALERT : Calcule EnemyAlert (visibilité mutuelle joueur/garde).
  *
  * Out: EnemyAlert =
  *   2 : ligne de vue dégagée (même écran, même rangée, pas d'obstacle)
@@ -203,7 +203,7 @@ void LOADLEVELX(uint8_t level_num);
 void CHECKALERT(void);
 
 /*
- * DISPVERSION — Affiche le numéro de version sur l'écran texte
+ * DISPVERSION : Affiche le numéro de version sur l'écran texte
  * et attend une touche. Utile uniquement en développement.
  */
 void DISPVERSION(void);
@@ -214,14 +214,14 @@ void DISPVERSION(void);
  * ----------------------------------------------------------------------- */
 
 /*
- * getreflect — Calcule les données du reflet dans le miroir.
+ * getreflect : Calcule les données du reflet dans le miroir.
  * Met à jour CharX, CharFace et dmirr (distance au miroir).
  * dmirr < 0 = joueur du mauvais côté (ne pas dessiner le reflet).
  */
 void getreflect(void);
 
 /*
- * CreateShad — Fait naître le shadowman depuis le miroir.
+ * CreateShad : Fait naître le shadowman depuis le miroir.
  * Appelé quand createshad == 0xFF.
  * Réinitialise CharID=1, positionne le shadowman, appelle SaveShad.
  * Initialise MaxOppStr = MaxKidStr, KidStrength = 1.

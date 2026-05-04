@@ -3,19 +3,19 @@
 
 /*
  * mover.h
- * Traduction de MOVER.S — Objets en transition (TROBs) et objets mobiles (MOBs)
+ * Traduction de MOVER.S : Objets en transition (TROBs) et objets mobiles (MOBs)
  * Source originale : Jordan Mechner, 1989
  * Module chargé à $ee00 (aux mem) sur Apple II.
  *
  * MOVER.S gère deux systèmes d'objets dynamiques :
  *
- * TROBs (Transitional Objects) — objets qui changent d'état progressivement :
+ * TROBs (Transitional Objects) : objets qui changent d'état progressivement :
  *   portails, trancheuses, plaques de pression, pics, planchers instables,
  *   torches, flacons, épées, sorties. Stockés dans les tableaux trloc[],
  *   trscrn[], trdirec[] (taille : trobspace).
  *   Mis à jour par ANIMTRANS chaque frame.
  *
- * MOBs (Mobile Objects) — objets qui se déplacent physiquement :
+ * MOBs (Mobile Objects) : objets qui se déplacent physiquement :
  *   uniquement les planchers détachés (falling floors). Stockés dans
  *   mobx[], moby[], mobscrn[], mobvel[], mobtype[], moblevel[]
  *   (taille : mobspace).
@@ -70,11 +70,11 @@ extern const int8_t gateinc[3]; /* = {-1, 4, 4} */
 
 
 /* -----------------------------------------------------------------------
- * ROUTINES PUBLIQUES — Jump table à $ee00
+ * ROUTINES PUBLIQUES : Jump table à $ee00
  * ----------------------------------------------------------------------- */
 
 /*
- * ANIMTRANS — Met à jour tous les TROBs de la liste de transition.
+ * ANIMTRANS : Met à jour tous les TROBs de la liste de transition.
  *
  * Pour chaque TROB, appelle animobj() qui dispatch vers la routine
  * d'animation appropriée (animgate, animplate, animspikes...).
@@ -88,7 +88,7 @@ extern const int8_t gateinc[3]; /* = {-1, 4, 4} */
 void ANIMTRANS(void);
 
 /*
- * TRIGSPIKES — Déclenche les pics d'un bloc.
+ * TRIGSPIKES : Déclenche les pics d'un bloc.
  *
  * In: résultats de rdblock (tempscrn, trloc depuis Y, BlueSpec)
  * Si les pics sont rétractés (state=0) : les ajoute à la trans list.
@@ -98,7 +98,7 @@ void ANIMTRANS(void);
 void TRIGSPIKES(void);
 
 /*
- * PUSHPP — Appuie sur une plaque de pression.
+ * PUSHPP : Appuie sur une plaque de pression.
  *
  * In: résultats de rdblock pour la plaque
  * Ajoute la plaque à la trans list, déclenche les objets liés
@@ -108,20 +108,20 @@ void TRIGSPIKES(void);
 void PUSHPP(void);
 
 /*
- * BREAKLOOSE1 — Déclenche un plancher instable avec un état initial donné.
+ * BREAKLOOSE1 : Déclenche un plancher instable avec un état initial donné.
  * In: A = état initial (1 = normal, ou valeur de timer)
  * Ne déclenche pas si le plancher est "required" (bit reqmask dans BlueType).
  */
 void BREAKLOOSE1(uint8_t initial_state);
 
 /*
- * BREAKLOOSE — Déclenche un plancher instable (état initial = 1).
+ * BREAKLOOSE : Déclenche un plancher instable (état initial = 1).
  * Raccourci pour BREAKLOOSE1(1).
  */
 void BREAKLOOSE(void);
 
 /*
- * ANIMMOBS — Met à jour tous les MOBs (planchers qui tombent).
+ * ANIMMOBS : Met à jour tous les MOBs (planchers qui tombent).
  *
  * Pour chaque MOB : applique la gravité, détecte collision avec le sol,
  * crée éventuellement un nouveau MOB (plancher rebondit sur un autre),
@@ -133,81 +133,81 @@ void BREAKLOOSE(void);
 void ANIMMOBS(void);
 
 /*
- * ADDMOBS — Ajoute tous les MOBs visibles à la table d'objets pour l'affichage.
+ * ADDMOBS : Ajoute tous les MOBs visibles à la table d'objets pour l'affichage.
  * Appelé depuis DoFast (TOPCTRL) lors de l'assemblage du frame.
  */
 void ADDMOBS(void);
 
 /*
- * CLOSEEXIT — Ouvre la sortie en grand puis la laisse se refermer.
+ * CLOSEEXIT : Ouvre la sortie en grand puis la laisse se refermer.
  * In: Y = trloc (position du bloc exit), A = trscrn
  * Utilisé pour l'animation d'entrée (slam shut) au début du niveau.
  */
 void CLOSEEXIT(void);
 
 /*
- * GETSPIKES — Retourne l'état des pics.
+ * GETSPIKES : Retourne l'état des pics.
  * Out: 0 = rétractés (sûrs), 1 = étendus, 2 = en extension
  */
 uint8_t GETSPIKES(void);
 
 /*
- * SHAKEM — Secoue tous les planchers instables visibles sur un niveau.
+ * SHAKEM : Secoue tous les planchers instables visibles sur un niveau.
  * In: A = CharBlockY (niveau à secouer)
  * Appelé depuis shakeloose (TOPCTRL) quand le joueur saute.
  */
 void SHAKEM(uint8_t block_y);
 
 /*
- * TRIGSLICER — Déclenche une trancheuse.
+ * TRIGSLICER : Déclenche une trancheuse.
  * In: A = état initial (avec hibit = smear flag)
  *     Y = trloc, BlueSpec déjà pointé
  */
 void TRIGSLICER(uint8_t initial_state);
 
 /*
- * TRIGTORCH — Déclenche l'animation d'une torche.
+ * TRIGTORCH : Déclenche l'animation d'une torche.
  * In: Y = trloc, A = trscrn
  */
 void TRIGTORCH(void);
 
 /*
- * GETFLAMEFRAME — Avance d'un frame dans l'animation de flamme.
+ * GETFLAMEFRAME : Avance d'un frame dans l'animation de flamme.
  * In/Out: A = état courant de la flamme (0 à torchLast)
  */
 uint8_t GETFLAMEFRAME(uint8_t state);
 
 /*
- * SMASHMIRROR — Casse le miroir (met BlueSpec à 86).
+ * SMASHMIRROR : Casse le miroir (met BlueSpec à 86).
  * Appelé depuis CHECKCOLL quand le joueur traverse le miroir en courant.
  */
 void SMASHMIRROR(void);
 
 /*
- * JAMSPIKES — Bloque les pics dans l'état étendu (corps empalé).
+ * JAMSPIKES : Bloque les pics dans l'état étendu (corps empalé).
  * Met BlueSpec à 0xFF et retire les pics de la trans list (trdirec=-1).
  */
 void JAMSPIKES(void);
 
 /*
- * TRIGFLASK — Déclenche l'animation d'un flacon.
+ * TRIGFLASK : Déclenche l'animation d'un flacon.
  * Choisit un frame de départ aléatoire.
  */
 void TRIGFLASK(void);
 
 /*
- * GETFLASKFRAME — Avance d'un frame dans l'animation d'un flacon.
+ * GETFLASKFRAME : Avance d'un frame dans l'animation d'un flacon.
  * In/Out: A = frame courant (1 à bubbLast)
  */
 uint8_t GETFLASKFRAME(uint8_t frame);
 
 /*
- * TRIGSWORD — Déclenche l'animation d'une épée (scintillement).
+ * TRIGSWORD : Déclenche l'animation d'une épée (scintillement).
  */
 void TRIGSWORD(void);
 
 /*
- * JAMPP — Bloque une plaque de pression sous un poids mort.
+ * JAMPP : Bloque une plaque de pression sous un poids mort.
  * Transforme pressplate en dpressplate (permanently depressed),
  * ou upressplate en rubble.
  */

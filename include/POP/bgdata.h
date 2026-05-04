@@ -3,22 +3,22 @@
 
 /*
  * bgdata.h
- * Traduction de BGDATA.S — Tables de données du background
+ * Traduction de BGDATA.S : Tables de données du background
  * Source originale : Jordan Mechner, 1989
  *
  * -----------------------------------------------------------------------
  * NATURE DU FICHIER
  *
  * BGDATA.S est un fichier de DONNÉES PURES inclus par FRAMEADV.S via
- * une directive `put bgdata`. Il ne contient aucun code exécutable —
+ * une directive `put bgdata`. Il ne contient aucun code exécutable :
  * uniquement des constantes et des tableaux statiques.
  *
  * Il définit deux catégories de contenu :
  *
- *   1. Les IDs des objets de blueprint (0-29) — déjà définis dans
+ *   1. Les IDs des objets de blueprint (0-29) : déjà définis dans
  *      MOVEDATA.S pour les tests logiques, redéfinis ici avec les mêmes
  *      valeurs pour l'usage dans FRAMEADV. En C, un seul fichier
- *      (movedata.h) suffit — pas de redéfinition nécessaire.
+ *      (movedata.h) suffit : pas de redéfinition nécessaire.
  *
  *   2. Les tables de rendu des sections A/B/C/D/Front de chaque objet :
  *      pour chaque objet (indexé par son ID), ces tables indiquent
@@ -30,19 +30,19 @@
  *
  * Chaque bloc du décor est rendu en cinq couches superposées :
  *
- *   Section A  — partie supérieure du bloc courant (arche, colonne, mur)
- *                Origine : (BlockLeft, BlockBot - 3) — plan "milieu"
+ *   Section A  : partie supérieure du bloc courant (arche, colonne, mur)
+ *                Origine : (BlockLeft, BlockBot - 3) : plan "milieu"
  *
- *   Section B  — partie mobile/animée du bloc à GAUCHE (portail, pics...)
+ *   Section B  : partie mobile/animée du bloc à GAUCHE (portail, pics...)
  *                Origine : même que A
  *
- *   Section C  — coin inférieur du bloc en BAS-À-GAUCHE (jonction)
- *                Origine : (BlockLeft, BlockBot) — plan "bas"
+ *   Section C  : coin inférieur du bloc en BAS-À-GAUCHE (jonction)
+ *                Origine : (BlockLeft, BlockBot) : plan "bas"
  *
- *   Section D  — le plancher lui-même (dalle horizontale)
+ *   Section D  : le plancher lui-même (dalle horizontale)
  *                Origine : (BlockLeft, BlockBot)
  *
- *   Front      — plan avant, dessiné PAR-DESSUS les personnages
+ *   Front      : plan avant, dessiné PAR-DESSUS les personnages
  *                (barreaux de portail, façade de pilier, devant d'arche)
  *
  * Toutes les valeurs X et Y dans ces tables sont relatives à ces origines.
@@ -54,7 +54,7 @@
  * IDs DES OBJETS DE BLUEPRINT
  *
  * Note : ces valeurs sont identiques à celles de movedata.h.
- * En C, inclure movedata.h suffit — ne pas redéclarer ici.
+ * En C, inclure movedata.h suffit : ne pas redéclarer ici.
  * Listées pour référence et correspondance avec les indices des tables.
  * ----------------------------------------------------------------------- */
 
@@ -74,7 +74,7 @@
  * ----------------------------------------------------------------------- */
 
 /*
- * maska[30] — masque de la section A
+ * maska[30] : masque de la section A
  * Numéro d'image du masque AND à appliquer avant de dessiner la section A
  * du bloc courant (pour éviter que le bloc voisin ne déborde).
  * 0 = pas de masque nécessaire.
@@ -82,14 +82,14 @@
 extern const uint8_t maska[30];
 
 /*
- * piecea[30] — image principale de la section A
+ * piecea[30] : image principale de la section A
  * Numéro d'image (dans la bgtable courante) de la partie supérieure
  * du bloc. 0 = section A invisible (espace vide, certains panneaux).
  */
 extern const uint8_t piecea[30];
 
 /*
- * pieceay[30] — offset Y de la section A (signé)
+ * pieceay[30] : offset Y de la section A (signé)
  * S'ajoute à la coordonnée Y de base (BlockBot - 3) pour positionner
  * la section A. La plupart des valeurs sont 0 ; exceptions notables :
  * pressplate (+1), archtop2 (-4), archtop3 (-4), archtop4 (-4).
@@ -97,14 +97,14 @@ extern const uint8_t piecea[30];
 extern const int8_t pieceay[30];
 
 /*
- * maskb[30] — masque de la section B
+ * maskb[30] : masque de la section B
  * Numéro d'image du masque AND pour la section B du bloc à gauche.
  * 0 = pas de masque.
  */
 extern const uint8_t maskb[30];
 
 /*
- * pieceb[30] — image de la section B (partie mobile/animée)
+ * pieceb[30] : image de la section B (partie mobile/animée)
  * Numéro d'image de la partie verticale du bloc à gauche.
  * Certaines valeurs ont le bit 7 set ($9e, $9f) pour indiquer
  * un panneau avec traitement spécial (panelb0/panelc0).
@@ -112,21 +112,21 @@ extern const uint8_t maskb[30];
 extern const uint8_t pieceb[30];
 
 /*
- * pieceby[30] — offset Y de la section B (signé)
+ * pieceby[30] : offset Y de la section B (signé)
  * S'ajoute à BlockBot - 3. Quelques valeurs négatives pour les
  * sections qui remontent au-dessus de la ligne de sol.
  */
 extern const int8_t pieceby[30];
 
 /*
- * bstripe[30] — image de la bande décorative palace (section B)
+ * bstripe[30] : image de la bande décorative palace (section B)
  * Uniquement pour le jeu de tuiles "palace" (BGset1 == 1).
  * 0 = pas de bande pour cet objet.
  */
 extern const uint8_t bstripe[30];
 
 /*
- * piecec[30] — image de la section C (coin bas-gauche)
+ * piecec[30] : image de la section C (coin bas-gauche)
  * Numéro d'image du coin de jonction entre le bas-gauche et
  * le bloc courant. Visible uniquement si le bloc courant est vide.
  * Certaines valeurs ont bit 7 set pour traitement spécial (panelc0).
@@ -134,27 +134,27 @@ extern const uint8_t bstripe[30];
 extern const uint8_t piecec[30];
 
 /*
- * pieced[30] — image de la section D (plancher)
+ * pieced[30] : image de la section D (plancher)
  * Numéro d'image de la dalle horizontale en bas du bloc.
  * C'est la partie la plus systématiquement présente.
  */
 extern const uint8_t pieced[30];
 
 /*
- * fronti[30] — image du plan avant (front)
+ * fronti[30] : image du plan avant (front)
  * Numéro d'image dessiné par-dessus les personnages.
  * 0 = pas de plan avant pour cet objet.
  */
 extern const uint8_t fronti[30];
 
 /*
- * fronty[30] — offset Y du plan avant (signé)
+ * fronty[30] : offset Y du plan avant (signé)
  * Relatif à la section A (BlockBot - 3 + pieceay).
  */
 extern const int8_t fronty[30];
 
 /*
- * frontx[30] — offset X du plan avant (en octets hi-res)
+ * frontx[30] : offset X du plan avant (en octets hi-res)
  * Relatif à blockxco (bord gauche du bloc courant).
  */
 extern const uint8_t frontx[30];
@@ -171,8 +171,8 @@ extern const uint8_t frontx[30];
 #define GATEC_MASK   0x0d   /* masque section C du portail */
 
 /*
- * gate8c[8] — 8 images de la section C du portail (selon hauteur)
- * gate8b[8] — 8 images du sommet du portail (selon hauteur)
+ * gate8c[8] : 8 images de la section C du portail (selon hauteur)
+ * gate8b[8] : 8 images du sommet du portail (selon hauteur)
  * Indexées par gateposn % 8.
  */
 extern const uint8_t gate8c[8];
@@ -209,8 +209,8 @@ extern const uint8_t gate8b[8];
  * ----------------------------------------------------------------------- */
 
 /*
- * spikea[10] — images de la section A des pics (frames 0-9)
- * spikeb[10] — images de la section B des pics
+ * spikea[10] : images de la section A des pics (frames 0-9)
+ * spikeb[10] : images de la section B des pics
  * Frame 0 = rétractés, frame 5 (spikeExt) = complètement sortis.
  */
 extern const uint8_t spikea[10];
@@ -225,7 +225,7 @@ extern const uint8_t spikeb[10];
  * ----------------------------------------------------------------------- */
 
 /*
- * slicerseq[7] — séquence des frames de la trancheuse
+ * slicerseq[7] : séquence des frames de la trancheuse
  * Chaque valeur est un index dans slicertop/slicerbot (1-5).
  */
 extern const uint8_t slicerseq[7];

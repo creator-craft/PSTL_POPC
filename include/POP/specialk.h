@@ -3,7 +3,7 @@
 
 /*
  * specialk.h
- * Traduction de SPECIALK.S — Input, son, temps et utilitaires divers
+ * Traduction de SPECIALK.S : Input, son, temps et utilitaires divers
  * Source originale : Jordan Mechner, 1989
  * Module chargé à $d900 (main LC bank 1) sur Apple II.
  *
@@ -17,7 +17,7 @@
  *
  * Beaucoup de routines de ce fichier sont ré-exportées dans la jump table
  * même si elles sont définies ailleurs (decstr, DoSaveGame, LoadLevelX,
- * potioneffect, checkalert...) — SPECIALK.S sert de point d'entrée
+ * potioneffect, checkalert...) : SPECIALK.S sert de point d'entrée
  * centralisé depuis la main LC vers les autres modules en aux LC.
  *
  * Note sur la constante min :
@@ -70,11 +70,11 @@
 
 
 /* -----------------------------------------------------------------------
- * ROUTINES PUBLIQUES — Jump table à $d900
+ * ROUTINES PUBLIQUES : Jump table à $d900
  * ----------------------------------------------------------------------- */
 
 /*
- * KEYS — Détecte et traite les appuis de touches.
+ * KEYS : Détecte et traite les appuis de touches.
  *
  * Lit le clavier Apple II ($C000), stocke dans keypress et keydown.
  * Appelle KREAD (contrôle clavier du joueur → kbdX, kbdY).
@@ -84,7 +84,7 @@
 void KEYS(void);
 
 /*
- * CLRJSTK — Met à jour les flags clr (clrF, clrB, clrU, clrD, clrbtn).
+ * CLRJSTK : Met à jour les flags clr (clrF, clrB, clrU, clrD, clrbtn).
  *
  * Système de "smart input" : détecte les appuis frais vs les appuis
  * maintenus. clr = -1 = appui frais non consommé, 0 = relâché,
@@ -97,13 +97,13 @@ void KEYS(void);
 void CLRJSTK(void);
 
 /*
- * ZEROSOUND — Remet la table de sons à zéro (soundtable[0] = 0).
+ * ZEROSOUND : Remet la table de sons à zéro (soundtable[0] = 0).
  * Appelé en fin de chaque frame après playback().
  */
 void ZEROSOUND(void);
 
 /*
- * ADDSOUND — Ajoute un son à la table d'attente.
+ * ADDSOUND : Ajoute un son à la table d'attente.
  *
  * In: A = numéro de son (voir soundnames.h)
  * La table est lue par playback() en fin de frame.
@@ -113,7 +113,7 @@ void ZEROSOUND(void);
 void ADDSOUND(uint8_t sound_num);
 
 /*
- * FACEJSTK — Inverse JSTKX et échange clrF/clrB.
+ * FACEJSTK : Inverse JSTKX et échange clrF/clrB.
  *
  * Appelé par UserCtrl (CTRL.S) avant et après GENCTRL quand le
  * personnage est face à droite (CharFace == 0x00), pour que GENCTRL
@@ -122,27 +122,27 @@ void ADDSOUND(uint8_t sound_num);
 void FACEJSTK(void);
 
 /*
- * SAVESELECT / LOADSELECT — Sauvegarde/restaure les flags clr du
+ * SAVESELECT / LOADSELECT : Sauvegarde/restaure les flags clr du
  * dispositif sélectionné (joueur humain) dans clrSEL[].
  */
 void SAVESELECT(void);
 void LOADSELECT(void);
 
 /*
- * SAVEDESEL / LOADDESEL — Idem pour le dispositif non-sélectionné
+ * SAVEDESEL / LOADDESEL : Idem pour le dispositif non-sélectionné
  * (adversaire en mode manuel) dans clrDESEL[].
  */
 void SAVEDESEL(void);
 void LOADDESEL(void);
 
 /*
- * INITINPUT — Remet à zéro clrSEL[] et clrDESEL[].
+ * INITINPUT : Remet à zéro clrSEL[] et clrDESEL[].
  * Appelé depuis RESTART.
  */
 void INITINPUT(void);
 
 /*
- * DEMOKEYS — Vérifie si une touche ou un bouton interrompt la démo.
+ * DEMOKEYS : Vérifie si une touche ou un bouton interrompt la démo.
  *
  * Out: 0xFF si interruption (retour dans START), 0x00 sinon.
  * Appelé depuis MainLoop juste après KEYS.
@@ -151,7 +151,7 @@ void INITINPUT(void);
 uint8_t DEMOKEYS(void);
 
 /*
- * LISTTORCHES — Construit la liste des torches visibles sur VisScrn
+ * LISTTORCHES : Construit la liste des torches visibles sur VisScrn
  * dans torchx[], torchy[], torchstate[], torchclip[].
  *
  * Appelé avant la boucle musicale (songcues) pour que BURN puisse
@@ -161,7 +161,7 @@ uint8_t DEMOKEYS(void);
 void LISTTORCHES(void);
 
 /*
- * BURN — Anime une flamme de torche directement sur la page affichée.
+ * BURN : Anime une flamme de torche directement sur la page affichée.
  *
  * Contourne le système de listes d'images : appelle fastlay ou lay
  * directement sur la page courante pendant la musique.
@@ -170,7 +170,7 @@ void LISTTORCHES(void);
 void BURN(void);
 
 /*
- * GETMINLEFT — Calcule le temps restant en minutes et secondes (BCD).
+ * GETMINLEFT : Calcule le temps restant en minutes et secondes (BCD).
  *
  * In: FrameCount (compteur de frames, 16 bits)
  * Out: MinLeft = minutes restantes (BCD $00-$99)
@@ -182,7 +182,7 @@ void BURN(void);
 void GETMINLEFT(void);
 
 /*
- * KEEPTIME — Incrémente FrameCount et déclenche les messages de temps.
+ * KEEPTIME : Incrémente FrameCount et déclenche les messages de temps.
  *
  * Appelé chaque frame depuis NextFrame (TOPCTRL) quand le timer tourne.
  * Compare FrameCount avec timetable[] pour savoir si c'est le moment
@@ -192,7 +192,7 @@ void GETMINLEFT(void);
 void KEEPTIME(void);
 
 /*
- * SHORTENTIME — Raccourcit le temps restant à 15 "minutes".
+ * SHORTENTIME : Raccourcit le temps restant à 15 "minutes".
  *
  * Appelé quand le joueur triche (skip level). Modifie FrameCount
  * et NextTimeMsg pour simuler qu'il ne reste que 15 minutes.
@@ -201,7 +201,7 @@ void KEEPTIME(void);
 void SHORTENTIME(void);
 
 /*
- * CUESONG — Programme la musique à jouer.
+ * CUESONG : Programme la musique à jouer.
  *
  * In: A = numéro de chanson (voir soundnames.h)
  *     X = nombre de cycles dans lesquels la chanson doit être jouée
@@ -213,7 +213,7 @@ void SHORTENTIME(void);
 void CUESONG(uint8_t song_num, uint8_t song_count);
 
 /*
- * STROBE / DLOOP — Lit le clavier et le joystick.
+ * STROBE / DLOOP : Lit le clavier et le joystick.
  *
  * STROBE appelle keys() puis controller().
  * DLOOP est un alias de STROBE.
@@ -228,7 +228,7 @@ void DLOOP(void);
  * ----------------------------------------------------------------------- */
 
 /*
- * KREAD — Lit les touches de contrôle du joueur (j/k/l/u/i/o et
+ * KREAD : Lit les touches de contrôle du joueur (j/k/l/u/i/o et
  * leurs équivalents majuscules) et met à jour kbdX, kbdY.
  */
 void KREAD(void);
@@ -241,13 +241,13 @@ void DevelKeys(void);
 void TempDevel(void);
 
 /*
- * addkey — Ajoute une touche au buffer circulaire keybuf[].
+ * addkey : Ajoute une touche au buffer circulaire keybuf[].
  * Utilisé par checkcode() pour détecter les séquences secrètes.
  */
 void addkey(uint8_t key);
 
 /*
- * checkcode — Compare les dernières touches du buffer avec une séquence.
+ * checkcode : Compare les dernières touches du buffer avec une séquence.
  * In: adresse de la séquence (chaîne ASCII terminée par 0, en reverse)
  * Out: 0 si correspondance, 0xFF sinon
  */
