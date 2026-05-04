@@ -10,6 +10,10 @@
  * Toutes ces tables sont des données constantes calculées à la
  * compilation. En C elles sont déclarées extern const et définies
  * dans tables.c (un seul fichier de définition).
+ * 
+ * Certaines tables présentes ici ne sont pas utiles en C :
+ *  - ByteTable et OffsetTable : utilisées pour l'adressage du framebuffer Apple II, inutiles avec SDL2
+ *  - Mult10, Mult7, Mult30 : tables de multiplication utilisées pour éviter les calculs en temps réel sur Apple II, inutiles en C
  *
  * Conventions de coordonnées rappelées ici car elles gouvernent
  * toutes les tables :
@@ -90,7 +94,7 @@ extern const uint8_t PixelTable[256];
 
 
 /* -----------------------------------------------------------------------
- * TABLES DE MULTIPLICATION
+ * TABLES DE MULTIPLICATION : INUTILES EN C (presents ici pour ré)
  * ----------------------------------------------------------------------- */
 
 /*
