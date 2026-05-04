@@ -7,7 +7,7 @@ void fastlaySTA(int img, int x, int y);
 // TODO
 void layrsave();
 void addpeel();
-void lay();
+void lay(int, int, int, int, int, int, int, int, int);
 void fastmask(int, int, int);
 void cls();
 void zeropeel();

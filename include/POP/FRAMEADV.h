@@ -62,13 +62,13 @@ extern uint8_t BELOW[10], SBELOW[10];
 /**
  * SURE : Draws the entier screen (10*3 blocks) from scratch.
  */
-void SURE(void);
+void SURE();
 
 /**
  * FAST : Fast screen redraw.
  * Only updates the blocks presents in a refresh buffer.
  */
-void FAST(void);
+void FAST();
 
 /**
  * GETINITOBJ : Get thhe initial state of an object.
@@ -77,53 +77,59 @@ uint8_t GETINITOBJ(uint8_t y_index);
 
 // ----- drawing -----
 
-void RedBlockSure(void);
-void RedDSure(void);
-void RedBlockFast(void);
-void RedDFast(void);
+void RedBlockSure();
+void RedDSure();
+void RedBlockFast();
+void RedDFast();
 
 // Displayed sections (A = up, B = left, C = corner, D = down/floor)
-void drawa(void);
-void drawb(void);
-void drawc(void);
-void drawd(void);
+void drawa();
+void drawb();
+void drawc();
+void drawd();
 
 // Movable elements
-void drawma(void);
-void drawmb(void);
-void drawmc(void);
-void drawmd(void);
+void drawma();
+void drawmb();
+void drawmc();
+void drawmd();
 
 // Specific elements
-void drawfrnt(void);   // Frontpiece (foreground)
-void drawfloor(void);
-void drawhalf(void);
-void drawobjs(void);
+void drawfrnt();   // Frontpiece (foreground)
+void drawfloor();
+void drawhalf();
+void drawobjs();
 
 // Specific objects
-void drawslicerf(void);
-void drawgatebf(void);
-void drawgateb(void);
-void drawgatec(void);
-void drawspikea(void);
-void drawspikeb(void);
-void drawtorchb(void);
-void drawflaska(void);
-void drawsworda(void);
-void drawexitb(void);
+void drawslicerf();
+void drawgatebf();
+void drawgateb();
+void drawgatec();
+void drawspikea();
+void drawspikeb();
+void drawtorchb();
+void drawflaska();
+void drawsworda();
+void drawexitb();
 
 // ----- utilities -----
 
-void setback(void);
-void setmid(void);
-void getprev(void);
-void getbelow(void);
-void calcblue(uint8_t screen_num);
-uint8_t getobjid(void);
+void setback();
+void setmid();
+void getprev();
+
+// Loads object ids and states of 10 blocks in the row below
+void getbelow(uint8_t rowno);
+
+// Returns the current screen's address
+int calcblue();
+
+// Returns the object id and state
+uint8_t getobjid(uint8_t object_offset);
 uint8_t getobjid1(uint8_t screen_num, uint8_t y_idx);
 
-void sortlist(void); // Sorts objects from background to foreground
+void sortlist(); // Sorts objects from background to foreground
 void loadobj(uint8_t obj_index);
-void wipesq(void);
+void wipesq();
 
 #endif /* FRAMEADV_H */
