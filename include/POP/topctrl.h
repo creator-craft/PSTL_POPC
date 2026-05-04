@@ -3,7 +3,7 @@
 
 /*
  * topctrl.h
- * Traduction de TOPCTRL.S — Boucle principale et orchestration du jeu
+ * Traduction de TOPCTRL.S : Boucle principale et orchestration du jeu
  * Source originale : Jordan Mechner, 1989
  * Module chargé à $2000 (aux mem) sur Apple II.
  */
@@ -54,7 +54,7 @@
 
 
 /* -----------------------------------------------------------------------
- * ROUTINES PUBLIQUES — Jump table à $2000
+ * ROUTINES PUBLIQUES : Jump table à $2000
  * ----------------------------------------------------------------------- */
 
 /* Démarrer une nouvelle partie. In: level = numéro de niveau (0=démo, 1=jeu) */

@@ -3,7 +3,7 @@
 
 /*
  * framedef.h
- * Traduction de FRAMEDEF.S — Définitions des frames d'animation
+ * Traduction de FRAMEDEF.S : Définitions des frames d'animation
  * Source originale : Jordan Mechner, 1989
  *
  * -----------------------------------------------------------------------
@@ -12,10 +12,10 @@
  * FRAMEDEF.S est un fichier de DONNÉES PURES. Il contient quatre blobs
  * de données alloués à partir de l'adresse $2800 :
  *
- *   Fdef      (1200 octets) — frames principaux : joueur + gardes (parties)
- *   altset1   (200 octets)  — frames alternatifs set 1 : gardes complets
- *   altset2   (450 octets)  — frames alternatifs set 2 : princesse + vizir
- *   swordtab  (192 octets)  — positions des épées pour chaque frame
+ *   Fdef      (1200 octets) : frames principaux : joueur + gardes (parties)
+ *   altset1   (200 octets)  : frames alternatifs set 1 : gardes complets
+ *   altset2   (450 octets)  : frames alternatifs set 2 : princesse + vizir
+ *   swordtab  (192 octets)  : positions des épées pour chaque frame
  *
  * Ces quatre tableaux sont chargés en mémoire par MASTER.S au démarrage
  * et constituent la "base de données d'animation" du jeu. Toute l'animation
@@ -24,17 +24,17 @@
  * -----------------------------------------------------------------------
  * FORMAT D'UN FRAME (5 octets par entrée dans Fdef)
  *
- *   Byte 0 : Fimage  — numéro d'image dans la chtable (bits 0-6)
+ *   Byte 0 : Fimage  : numéro d'image dans la chtable (bits 0-6)
  *                       bit 7 = sélecteur de table (0=table A, 1=table B)
- *   Byte 1 : Fsword  — numéro de frame d'épée dans swordtab (bits 0-5)
+ *   Byte 1 : Fsword  : numéro de frame d'épée dans swordtab (bits 0-5)
  *                       bits 6-7 = bits de sélection de table pour l'épée
- *   Byte 2 : Fdx     — déplacement X (signé, en pixels 140-res)
+ *   Byte 2 : Fdx     : déplacement X (signé, en pixels 140-res)
  *                       + = vers l'avant, - = vers l'arrière
- *   Byte 3 : Fdy     — déplacement Y (signé, positif = vers le bas)
- *   Byte 4 : Fcheck  — flags du frame :
+ *   Byte 3 : Fdy     : déplacement Y (signé, positif = vers le bas)
+ *   Byte 4 : Fcheck  : flags du frame :
  *                       bits 0-3 : position du pied (footmark, 0-13 pixels
  *                                  depuis le bord gauche de l'image)
- *                       bit  4   : Fthinmark — image "fine" (CDLeftEj/CDRightEj
+ *                       bit  4   : Fthinmark : image "fine" (CDLeftEj/CDRightEj
  *                                  resserrés de THINNER pixels de chaque côté)
  *                       bits 5   : flag spécial (turning frames)
  *                       bit  7   : parité X (0 = X pair, 1 = X impair)
@@ -48,8 +48,8 @@
  * FORMAT D'UNE ENTRÉE SWORDTAB (3 octets par entrée)
  *
  *   Byte 0 : numéro d'image de l'épée dans chtable3 (0 = pas d'épée)
- *   Byte 1 : DX — offset X de l'épée par rapport à FCharX (signé)
- *   Byte 2 : DY — offset Y de l'épée par rapport à FCharY (signé)
+ *   Byte 1 : DX : offset X de l'épée par rapport à FCharX (signé)
+ *   Byte 2 : DY : offset Y de l'épée par rapport à FCharY (signé)
  *
  * -----------------------------------------------------------------------
  * SETS ALTERNATIFS
@@ -62,7 +62,7 @@
  * CharID et CharPosn via usealtsets().
  *
  * altset2[0-84] = frames de la PRINCESSE (Pstand, Plie, Pback...) et
- *                 du VIZIR (Vstand, Vapproach...) — utilisés par les
+ *                 du VIZIR (Vstand, Vapproach...) : utilisés par les
  *                 scènes cinématiques de SUBS.S.
  *
  * -----------------------------------------------------------------------
@@ -118,7 +118,7 @@
  * ----------------------------------------------------------------------- */
 
 /*
- * Fdef[] — table principale des frames d'animation
+ * Fdef[] : table principale des frames d'animation
  *
  * Accès : Fdef[(frame_num - 1) * 5]
  *   [0] = Fimage, [1] = Fsword, [2] = Fdx, [3] = Fdy, [4] = Fcheck
@@ -130,16 +130,16 @@
 extern uint8_t Fdef[FDEF_SIZE];
 
 /*
- * altset1[] — frames alternatifs set 1 (gardes, frames 150-189)
+ * altset1[] : frames alternatifs set 1 (gardes, frames 150-189)
  *
  * Même format que Fdef. Accès : altset1[(frame_num - 150) * 5]
  * Les images font référence à chtable4 (jeu de sprites ennemi).
- * Les gardes sont miroirs du joueur — l'épée est en main gauche.
+ * Les gardes sont miroirs du joueur : l'épée est en main gauche.
  */
 extern uint8_t altset1[ALTSET1_SIZE];
 
 /*
- * altset2[] — frames alternatifs set 2 (princesse et vizir)
+ * altset2[] : frames alternatifs set 2 (princesse et vizir)
  *
  * Même format. Accès : altset2[(frame_num - 1) * 5]
  * Utilisé pour CharID == 5 (princesse) et CharID == 6 (vizir).
@@ -148,7 +148,7 @@ extern uint8_t altset1[ALTSET1_SIZE];
 extern uint8_t altset2[ALTSET2_SIZE];
 
 /*
- * swordtab[] — positions des épées
+ * swordtab[] : positions des épées
  *
  * Format : { image, dx, dy } × 64
  * Accès : swordtab[(sword_frame - 1) * 3]

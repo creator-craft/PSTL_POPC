@@ -3,7 +3,7 @@
 
 /*
  * eq.h
- * Traduction de EQ.S — Equates globaux du jeu Prince of Persia (Apple II)
+ * Traduction de EQ.S : Equates globaux du jeu Prince of Persia (Apple II)
  * Source originale : Jordan Mechner, 1989
  *
  * Ce fichier regroupe :
@@ -246,7 +246,7 @@ extern uint8_t INFO[256];
 
 
 /* -----------------------------------------------------------------------
- * INFO BLOCK — positions de départ (sous-structure de INFO)
+ * INFO BLOCK : positions de départ (sous-structure de INFO)
  * En assembleur, défini avec "dum INFO" puis des offsets.
  * ----------------------------------------------------------------------- */
 /* Offsets dans INFO[] */
@@ -349,17 +349,17 @@ extern uint8_t msgOP[MAX_MSG];
 
 
 /* -----------------------------------------------------------------------
- * ZERO PAGE — Paramètres graphiques ($00-$17)
+ * ZERO PAGE : Paramètres graphiques ($00-$17)
  * Sur Apple II, ces variables occupent la page zéro (accès rapide).
  * En C, on les déclare comme variables globales ordinaires.
  * ----------------------------------------------------------------------- */
-extern uint8_t  PAGE;      /* $00 — page graphique active (0x20 ou 0x40) */
-extern uint8_t  XCO;       /* $01 — coordonnée X courante (en octets) */
-extern uint8_t  YCO;       /* $02 — coordonnée Y courante (ligne) */
-extern uint8_t  OFFSET;    /* $03 — offset sub-octet (0-6) */
-extern uint8_t  IMAGE[2];  /* $04-$05 — adresse de l'image courante (lo/hi) */
-extern uint8_t  OPACITY;   /* $06 — type d'opération de dessin */
-extern uint8_t  TABLE[2];  /* $07-$08 — adresse de la table d'images */
+extern uint8_t  PAGE;      /* $00 : page graphique active (0x20 ou 0x40) */
+extern uint8_t  XCO;       /* $01 : coordonnée X courante (en octets) */
+extern uint8_t  YCO;       /* $02 : coordonnée Y courante (ligne) */
+extern uint8_t  OFFSET;    /* $03 : offset sub-octet (0-6) */
+extern uint8_t  IMAGE[2];  /* $04-$05 : adresse de l'image courante (lo/hi) */
+extern uint8_t  OPACITY;   /* $06 : type d'opération de dessin */
+extern uint8_t  TABLE[2];  /* $07-$08 : adresse de la table d'images */
 extern uint8_t  PEELBUF[2];
 extern uint8_t  PEELIMG[2];
 extern uint8_t  PEELXCO;
@@ -377,7 +377,7 @@ extern uint8_t  BOTCUT;
 
 
 /* -----------------------------------------------------------------------
- * ZERO PAGE — Variables globales ($18-$3F)
+ * ZERO PAGE : Variables globales ($18-$3F)
  * ----------------------------------------------------------------------- */
 extern uint8_t JSTKX;       /* joystick X brut */
 extern uint8_t JSTKY;       /* joystick Y brut */
@@ -415,7 +415,7 @@ extern uint8_t butt;
 
 
 /* -----------------------------------------------------------------------
- * PAGES 2-3 — Variables supplémentaires ($200-$3FF)
+ * PAGES 2-3 : Variables supplémentaires ($200-$3FF)
  * ----------------------------------------------------------------------- */
 extern uint8_t inmenu;
 extern uint8_t inbuilder;
@@ -446,7 +446,7 @@ extern uint8_t recheck0;
 
 
 /* -----------------------------------------------------------------------
- * CONSTANTES — Dimensions de l'écran
+ * CONSTANTES : Dimensions de l'écran
  * ----------------------------------------------------------------------- */
 #define ScrnWidth   140   /* largeur en pixels (système 140px) */
 #define ScrnHeight  192   /* hauteur en lignes */
@@ -457,7 +457,7 @@ extern uint8_t recheck0;
 
 
 /* -----------------------------------------------------------------------
- * CONSTANTES — Masques de bits pour BLUETYPE
+ * CONSTANTES : Masques de bits pour BLUETYPE
  * secmask : bits 7-6 (numéro de section)
  * reqmask : bit 5   (requiert dessin spécial ?)
  * idmask  : bits 4-0 (identifiant de l'objet, 0-31)
@@ -468,7 +468,7 @@ extern uint8_t recheck0;
 
 
 /* -----------------------------------------------------------------------
- * CONSTANTES — Opcodes de dessin (valeur de OPACITY)
+ * CONSTANTES : Opcodes de dessin (valeur de OPACITY)
  * Détermine l'opération logique appliquée pixel par pixel dans fastlay.
  * ----------------------------------------------------------------------- */
 #define OP_AND   0   /* and  : masque (pixels noirs = transparents) */

@@ -3,7 +3,7 @@
 
 /*
  * gamebg.h
- * Traduction de GAMEBG.S — Rendu des personnages et des éléments d'interface
+ * Traduction de GAMEBG.S : Rendu des personnages et des éléments d'interface
  * Source originale : Jordan Mechner, 1989
  * Module chargé à $4c00 (aux mem) sur Apple II.
  *
@@ -11,7 +11,7 @@
  * NATURE DU FICHIER
  *
  * GAMEBG.S est le module de RENDU DES PERSONNAGES ET DE L'INTERFACE.
- * Malgré son nom ("game background"), il ne dessine pas le background —
+ * Malgré son nom ("game background"), il ne dessine pas le background :
  * c'est FRAMEADV.S qui s'en charge. GAMEBG.S est responsable de :
  *
  *   1. L'ajout des personnages à la table d'objets (ADDCHAROBJ)
@@ -20,7 +20,7 @@
  *   2. Le rendu des barres de force (DRAWKIDMETER, DRAWOPPMETER)
  *
  *   3. Les messages superposés (PRINTLEVEL, TIMELEFTMSG, CONTINUEMSG,
- *      FLIPDISKMSG) — affichés par-dessus le décor via addmsg
+ *      FLIPDISKMSG) : affichés par-dessus le décor via addmsg
  *
  *   4. Les effets visuels spéciaux de la salle de la princesse :
  *      flammes (SETUPFLAME, PSETUPFLAME), sablier (DRAWGLASS),
@@ -28,7 +28,7 @@
  *      étoile d'impact de combat (SETUPCOMIX)
  *
  *   5. Utilitaires de rendu : INITLAY (initialise les paramètres de
- *      clipping), CALCBLUE (calcule les pointeurs blueprint — définie
+ *      clipping), CALCBLUE (calcule les pointeurs blueprint : définie
  *      ici bien que logiquement appartenant à FRAMEADV.S, voir GRAFIX.S)
  *
  *   6. La protection contre la copie visuelle (YELLOW, SETRECHECK0,
@@ -39,10 +39,10 @@
  *
  * Les personnages peuvent être dessinés de trois façons selon le contexte :
  *
- *   DrawNormal  — mode mask+OR avec layrsave (rendu standard)
- *   DrawEored   — mode XOR (effet ombre pour le shadowman, et pour
+ *   DrawNormal  : mode mask+OR avec layrsave (rendu standard)
+ *   DrawEored   : mode XOR (effet ombre pour le shadowman, et pour
  *                 le joueur pendant la phase de "merge" niveau 12)
- *   DrawShifted — décalé d'1 bit (effet coloré pour certains gardes,
+ *   DrawShifted : décalé d'1 bit (effet coloré pour certains gardes,
  *                 GuardColor != 0)
  *
  * DRAWKID choisit entre Normal et Eored selon backtolife et mergetimer.
@@ -104,54 +104,54 @@
 
 
 /* -----------------------------------------------------------------------
- * ROUTINES PUBLIQUES — Jump table à $4c00
+ * ROUTINES PUBLIQUES : Jump table à $4c00
  * ----------------------------------------------------------------------- */
 
 /*
- * UPDATEMETERS — Redessine les barres de force si redkidmeter/redoppmeter
+ * UPDATEMETERS : Redessine les barres de force si redkidmeter/redoppmeter
  * sont non nuls. Appelé depuis FAST (FRAMEADV.S) en fin de frame rapide.
  */
 void UPDATEMETERS(void);
 
 /*
- * DRAWKIDMETER — Dessine la barre de force du joueur (bas-gauche).
+ * DRAWKIDMETER : Dessine la barre de force du joueur (bas-gauche).
  * Utilise KidStrength, MaxKidStr, PAGE (pour le flash à 1).
  * Ajoute les images à la liste msg via addmsg.
  */
 void DRAWKIDMETER(void);
 
 /*
- * DRAWOPPMETER — Dessine la barre de force de l'adversaire (bas-droite).
+ * DRAWOPPMETER : Dessine la barre de force de l'adversaire (bas-droite).
  * N'affiche pas la barre pour la souris (CharID=24), le squelette (4),
  * ni le shadowman sauf sur level 12.
  */
 void DRAWOPPMETER(void);
 
 /*
- * DRAWSWORD — Ajoute l'épée à la table d'objets (mode DrawNormal).
+ * DRAWSWORD : Ajoute l'épée à la table d'objets (mode DrawNormal).
  * Appelé depuis addchars (TOPCTRL.S) après setupkid/setupshad.
  */
 void DRAWSWORD(void);
 
 /*
- * DRAWKID — Ajoute le joueur à la table d'objets.
+ * DRAWKID : Ajoute le joueur à la table d'objets.
  * Choisit DrawNormal, DrawEored (merge/backtolife) selon état.
  */
 void DRAWKID(void);
 
 /*
- * DRAWSHAD — Ajoute le shadowman à la table d'objets (toujours DrawEored).
+ * DRAWSHAD : Ajoute le shadowman à la table d'objets (toujours DrawEored).
  */
 void DRAWSHAD(void);
 
 /*
- * DRAWGUARD — Ajoute un garde à la table d'objets.
+ * DRAWGUARD : Ajoute un garde à la table d'objets.
  * DrawNormal si GuardColor==0, DrawShifted sinon.
  */
 void DRAWGUARD(void);
 
 /*
- * SETUPFLAME — Prépare les paramètres pour dessiner une flamme de torche
+ * SETUPFLAME : Prépare les paramètres pour dessiner une flamme de torche
  * dans le décor normal (section B d'une torche).
  *
  * In: XCO = blockxco, YCO = Ay, X = état de la torche (frame index)
@@ -161,20 +161,20 @@ void DRAWGUARD(void);
 void SETUPFLAME(uint8_t torch_state);
 
 /*
- * PSETUPFLAME — Version pour la salle de la princesse.
+ * PSETUPFLAME : Version pour la salle de la princesse.
  * Utilise ptorchflame[] et chtable6. Appelle INITLAY.
  * In: XCO, YCO, X = frame #
  */
 void PSETUPFLAME(uint8_t frame);
 
 /*
- * CONTINUEMSG — Affiche "Press button to continue" via addmsg+layrsave.
+ * CONTINUEMSG : Affiche "Press button to continue" via addmsg+layrsave.
  * Positionne le message en bas si KidBlockX est pair.
  */
 void CONTINUEMSG(void);
 
 /*
- * ADDCHAROBJ — Ajoute un personnage à la table d'objets.
+ * ADDCHAROBJ : Ajoute un personnage à la table d'objets.
  *
  * Convertit FCharX (280-res) en XCO/OFFSET (byte/offset) via CVTX,
  * remplit les champs objX/Y/IMG/TAB/FACE/CU/CL/CR/CD/TYP/INDX,
@@ -186,14 +186,14 @@ void CONTINUEMSG(void);
 void ADDCHAROBJ(uint8_t obj_type);
 
 /*
- * SETOBJINDX — Enregistre l'index de bloc du personnage dans objbuf.
+ * SETOBJINDX : Enregistre l'index de bloc du personnage dans objbuf.
  * In: X = index dans objX[] (déjà incrémenté), FCharIndex
  * Marque objbuf[FCharIndex] = 1 si le bloc est onscreen.
  */
 void SETOBJINDX(void);
 
 /*
- * PRINTLEVEL — Affiche le message "Level XX" en superposition.
+ * PRINTLEVEL : Affiche le message "Level XX" en superposition.
  * Utilise msgbox + levelmsg + digit1/digit2.
  */
 void PRINTLEVEL(void);
@@ -202,12 +202,12 @@ void PRINTLEVEL(void);
  * DRAWOPPMETER (déjà déclarée ci-dessus) */
 
 /*
- * FLIPDISKMSG — Affiche "Turn disk over" via addmsg+layrsave.
+ * FLIPDISKMSG : Affiche "Turn disk over" via addmsg+layrsave.
  */
 void FLIPDISKMSG(void);
 
 /*
- * TIMELEFTMSG — Affiche "XX Minutes Left" (ou "XX Seconds").
+ * TIMELEFTMSG : Affiche "XX Minutes Left" (ou "XX Seconds").
  * Bascule sur "Seconds" pendant la dernière minute.
  * Repositionne le message en bas si le joueur est en train de tomber
  * sur la rangée du milieu.
@@ -215,7 +215,7 @@ void FLIPDISKMSG(void);
 void TIMELEFTMSG(void);
 
 /*
- * SETUPFLASK — Prépare les paramètres pour dessiner un flacon animé.
+ * SETUPFLASK : Prépare les paramètres pour dessiner un flacon animé.
  *
  * In: XCO, YCO (position du bloc), X = état du flacon
  *     (bits 7-5 = type de potion, bits 4-0 = frame courant)
@@ -226,7 +226,7 @@ void TIMELEFTMSG(void);
 void SETUPFLASK(uint8_t flask_state);
 
 /*
- * SETUPCOMIX — Ajoute une étoile d'impact de combat à la table d'objets.
+ * SETUPCOMIX : Ajoute une étoile d'impact de combat à la table d'objets.
  *
  * Positionne l'étoile au-dessus de CharY (ou en bas si mort/accroupi).
  * Choisit la couleur (rouge pour le joueur, bleu pour les adversaires)
@@ -236,47 +236,47 @@ void SETUPFLASK(uint8_t flask_state);
 void SETUPCOMIX(void);
 
 /*
- * DRAWPOST — Dessine le grand pilier blanc de la salle de la princesse.
+ * DRAWPOST : Dessine le grand pilier blanc de la salle de la princesse.
  * Ajoute directement à la liste fg (addfore).
  */
 void DRAWPOST(void);
 
 /*
- * DRAWGLASS — Dessine le sablier dans la salle de la princesse.
+ * DRAWGLASS : Dessine le sablier dans la salle de la princesse.
  * In: X = état du sablier (0-8, 0 = plein)
  * Ajoute à la liste bg (addback) via chtable6.
  */
 void DRAWGLASS(uint8_t glass_state);
 
 /*
- * INITLAY — Initialise les paramètres de clipping pour un appel à LAY.
+ * INITLAY : Initialise les paramètres de clipping pour un appel à LAY.
  * Met BANK=3 (auxmem), LEFTCUT=0, RIGHTCUT=40, TOPCUT=0, BOTCUT=192.
  * Appelé avant tout appel direct à lay() ou fastlay() dans ce module.
  */
 void INITLAY(void);
 
 /*
- * TWINKLE — Fait scintiller une étoile hors de la fenêtre (mode EOR).
+ * TWINKLE : Fait scintiller une étoile hors de la fenêtre (mode EOR).
  * Met à jour les DEUX pages hi-res directement (bypass du système normal).
  * In: X = numéro d'étoile (0-3)
  */
 void TWINKLE(uint8_t star_num);
 
 /*
- * FLOW — Dessine le sable qui coule dans le sablier.
+ * FLOW : Dessine le sable qui coule dans le sablier.
  * In: X = frame (0-3), Y = état du sablier (0-7, 8 = vide)
  * Appelle lay() directement avec BOTCUT ajusté selon la hauteur du sable.
  */
 void FLOW(uint8_t frame, uint8_t glass_state);
 
 /*
- * PMASK — Masque le visage et les cheveux de la princesse pour certains
+ * PMASK : Masque le visage et les cheveux de la princesse pour certains
  * frames (plie, pslump). Appelé après ADDCHAROBJ dans les scènes.
  */
 void PMASK(void);
 
 /*
- * YELLOW — Protection contre la copie (2ème niveau).
+ * YELLOW : Protection contre la copie (2ème niveau).
  * Sur la version 3.5", met simplement yellowflag=$80.
  * Sur la version 5.25", effectue une vérification de signature disque.
  * In: X = paramètre de vérification
@@ -284,14 +284,14 @@ void PMASK(void);
 void YELLOW(uint8_t param);
 
 /*
- * SETRECHECK0 — Initialise le pointeur locals pour RECHECKYEL.
+ * SETRECHECK0 : Initialise le pointeur locals pour RECHECKYEL.
  * Fait pointer locals vers recheck0.
  * Out: A = 0 (tombe dans INITLAY)
  */
 void SETRECHECK0(void);
 
 /*
- * RECHECKYEL — Revérifie la protection si l'échec était dû à un disque
+ * RECHECKYEL : Revérifie la protection si l'échec était dû à un disque
  * absent. Appelé après cutprincess dans la boucle des cinématiques.
  * Out: A = 0xFF si vérification réussie, 0 sinon
  */

@@ -3,14 +3,14 @@
 
 /*
  * coll.h
- * Traduction de COLL.S — Détection et résolution des collisions
+ * Traduction de COLL.S : Détection et résolution des collisions
  * Source originale : Jordan Mechner, 1989
  * Module chargé à $4500 (aux mem) sur Apple II.
  *
  * Ce fichier gère deux types de collisions distincts :
  *   1. Collisions avec les barrières verticales (murs, portails,
- *      miroirs, trancheuses) — CHECKBARR / COLLISIONS
- *   2. Collision avec le sol (gérée dans CTRL.S — CHECKFLOOR)
+ *      miroirs, trancheuses) : CHECKBARR / COLLISIONS
+ *   2. Collision avec le sol (gérée dans CTRL.S : CHECKFLOOR)
  *
  * Le système de détection utilise des buffers de "collision data" (CD)
  * et "screen number" (SN) sur deux frames consécutifs pour détecter
@@ -43,7 +43,7 @@ extern const uint8_t BarR[5]; /* = {0,  0, 9, 11, 0} */
 #define OOF_VELOCITY_COLL    22
 
 /*
- * GATEMARGIN — marge en pixels ajoutée à l'ouverture du portail
+ * GATEMARGIN : marge en pixels ajoutée à l'ouverture du portail
  * pour décider s'il bloque le passage.
  * Plus élevé = portail plus généreux (le personnage passe plus facilement).
  */
@@ -51,11 +51,11 @@ extern const uint8_t BarR[5]; /* = {0,  0, 9, 11, 0} */
 
 
 /* -----------------------------------------------------------------------
- * ROUTINES PUBLIQUES — Jump table à $4500
+ * ROUTINES PUBLIQUES : Jump table à $4500
  * ----------------------------------------------------------------------- */
 
 /*
- * CHECKBARR — Détecte les collisions avec les barrières verticales.
+ * CHECKBARR : Détecte les collisions avec les barrières verticales.
  *
  * Remplit les buffers CD (collision data) et SN (screen number) pour
  * les blocs dans la plage [CDLeftEj .. CDRightEj] sur les trois niveaux
@@ -75,7 +75,7 @@ extern const uint8_t BarR[5]; /* = {0,  0, 9, 11, 0} */
 void CHECKBARR(void);
 
 /*
- * COLLISIONS — Résout les collisions détectées par CHECKBARR.
+ * COLLISIONS : Résout les collisions détectées par CHECKBARR.
  *
  * In: collideL, collideR (résultats de CHECKBARR)
  *
@@ -89,7 +89,7 @@ void CHECKBARR(void);
 void COLLISIONS(void);
 
 /*
- * GETFWDDIST — Distance disponible pour un "pas prudent" vers l'avant.
+ * GETFWDDIST : Distance disponible pour un "pas prudent" vers l'avant.
  *
  * Analyse les blocs devant le personnage et retourne :
  *   A = distance en pixels (0-14) jusqu'à l'obstacle ou le bord
@@ -102,7 +102,7 @@ void COLLISIONS(void);
 uint8_t GETFWDDIST(uint8_t *obstacle_type);
 
 /*
- * CHECKCOLL — Vérifie si un bloc donné constitue réellement une collision.
+ * CHECKCOLL : Vérifie si un bloc donné constitue réellement une collision.
  *
  * In: résultats RDBLOCK (A = objid)
  * Out: carry set = collision effective, carry clear = pas de collision
@@ -118,7 +118,7 @@ uint8_t GETFWDDIST(uint8_t *obstacle_type);
 uint8_t CHECKCOLL(uint8_t objid); /* retourne 1 si collision, 0 sinon */
 
 /*
- * ANIMCHAR — Avance d'un frame dans la séquence d'animation du personnage.
+ * ANIMCHAR : Avance d'un frame dans la séquence d'animation du personnage.
  *
  * Lit les octets de Fdef[CharSeq] via GETSEQ jusqu'à trouver un numéro
  * de frame (valeur positive non-instruction), en exécutant au passage
@@ -150,7 +150,7 @@ uint8_t CHECKCOLL(uint8_t objid); /* retourne 1 si collision, 0 sinon */
 void ANIMCHAR(void);
 
 /*
- * CHECKSLICE — Détecte si le personnage (joueur) est coupé par une trancheuse.
+ * CHECKSLICE : Détecte si le personnage (joueur) est coupé par une trancheuse.
  *
  * Utilise les buffers CD (CDthisframe) pour détecter un chevauchement
  * complet avec une trancheuse fermée (CDthisframe[x] == 0xFF).
@@ -162,7 +162,7 @@ void ANIMCHAR(void);
 void CHECKSLICE(void);
 
 /*
- * CHECKSLICE2 — Version pour l'adversaire (pas de buffers CD).
+ * CHECKSLICE2 : Version pour l'adversaire (pas de buffers CD).
  *
  * Vérifie directement les blocs sous les pieds et devant le personnage.
  * Utilisé pour les gardes qui n'ont pas de données CD complètes.
@@ -170,7 +170,7 @@ void CHECKSLICE(void);
 void CHECKSLICE2(void);
 
 /*
- * CHECKGATE — Si le personnage est debout sous un portail qui se ferme,
+ * CHECKGATE : Si le personnage est debout sous un portail qui se ferme,
  * le projette latéralement.
  *
  * Actif seulement pour CharPosn=15 (debout), 108-110 (accroupi),
@@ -179,7 +179,7 @@ void CHECKSLICE2(void);
 void CHECKGATE(void);
 
 /*
- * ENEMYCOLL — Détection de collision simplifiée pour l'adversaire.
+ * ENEMYCOLL : Détection de collision simplifiée pour l'adversaire.
  *
  * Vérifie si l'adversaire en garde recule dans un mur ou un portail.
  * Appelle bumpengback si c'est le cas.

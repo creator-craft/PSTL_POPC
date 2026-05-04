@@ -3,7 +3,7 @@
 
 /*
  * ctrl.h
- * Traduction de CTRL.S — Contrôle du personnage joueur et physique
+ * Traduction de CTRL.S : Contrôle du personnage joueur et physique
  * Source originale : Jordan Mechner, 1989
  * Module chargé à $3a00 (aux mem) sur Apple II.
  */
@@ -58,7 +58,7 @@
 
 
 /* -----------------------------------------------------------------------
- * ROUTINES PUBLIQUES — Jump table à $3a00
+ * ROUTINES PUBLIQUES : Jump table à $3a00
  * ----------------------------------------------------------------------- */
 
 /* Contrôle du joueur humain (lit le joystick sélectionné) */
@@ -107,7 +107,7 @@ void InsideBlock(void);
 
 
 /* -----------------------------------------------------------------------
- * MACHINE À ÉTATS — GENCTRL
+ * MACHINE À ÉTATS : GENCTRL
  * Ces routines sont appelées par GENCTRL selon CharPosn/CharAction.
  * ----------------------------------------------------------------------- */
 

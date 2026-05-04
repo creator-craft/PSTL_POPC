@@ -3,7 +3,7 @@
 
 /*
  * soundnames.h
- * Traduction de SOUNDNAMES.S — Identifiants des effets sonores et morceaux musicaux
+ * Traduction de SOUNDNAMES.S : Identifiants des effets sonores et morceaux musicaux
  * Source originale : Jordan Mechner, 1989
  *
  * Ce fichier ne contient QUE des #define.
@@ -71,7 +71,7 @@
 /* -----------------------------------------------------------------------
  * MUSIQUE DU TITRE / ÉCRAN D'ACCUEIL
  * Même fonction cuesong(), mais dans un contexte différent.
- * Note : les indices 7-12 chevauchent ceux de la musique de jeu —
+ * Note : les indices 7-12 chevauchent ceux de la musique de jeu 
  * le contexte d'appel (attract mode vs gameplay) détermine lequel jouer.
  * ----------------------------------------------------------------------- */
 #define s_Princess     7    /* thème de la princesse (titre) */

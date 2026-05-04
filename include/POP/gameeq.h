@@ -3,7 +3,7 @@
 
 /*
  * gameeq.h
- * Traduction de GAMEEQ.S — Equates spécifiques au gameplay de Prince of Persia
+ * Traduction de GAMEEQ.S : Equates spécifiques au gameplay de Prince of Persia
  * Source originale : Jordan Mechner, 1989
  *
  * Ce fichier regroupe :
@@ -101,7 +101,7 @@ extern uint8_t  SavNextMsg;
 
 
 /* -----------------------------------------------------------------------
- * JUMP TABLES — TOPCTRL.S (topctrl = $2000)
+ * JUMP TABLES : TOPCTRL.S (topctrl = $2000)
  * Routines d'initialisation et boucle principale du jeu.
  * ----------------------------------------------------------------------- */
 extern void start(void);
@@ -113,7 +113,7 @@ extern void goattract(void);
 
 
 /* -----------------------------------------------------------------------
- * JUMP TABLES — CTRL.S (ctrl = $3a00)
+ * JUMP TABLES : CTRL.S (ctrl = $3a00)
  * Routines de contrôle du personnage joueur.
  * ----------------------------------------------------------------------- */
 extern void PlayerCtrl(void);
@@ -127,7 +127,7 @@ extern void checkimpale(void);
 
 
 /* -----------------------------------------------------------------------
- * JUMP TABLES — AUTO.S (auto = $5400)
+ * JUMP TABLES : AUTO.S (auto = $5400)
  * Routines de comportement autonome des ennemis (IA).
  * ----------------------------------------------------------------------- */
 extern void AutoCtrl(void);
@@ -141,7 +141,7 @@ extern void cut(void);
 
 
 /* -----------------------------------------------------------------------
- * JUMP TABLES — COLL.S (coll = $4500)
+ * JUMP TABLES : COLL.S (coll = $4500)
  * Routines de détection de collision.
  * ----------------------------------------------------------------------- */
 extern void checkbarr(void);
@@ -156,7 +156,7 @@ extern void enemycoll(void);
 
 
 /* -----------------------------------------------------------------------
- * JUMP TABLES — GAMEBG.S (gamebg = $4c00)
+ * JUMP TABLES : GAMEBG.S (gamebg = $4c00)
  * Routines d'affichage des éléments de jeu (barres de vie, personnages...).
  * ----------------------------------------------------------------------- */
 extern void updatmeters(void);
@@ -189,7 +189,7 @@ extern void recheckyel(void);
 
 
 /* -----------------------------------------------------------------------
- * JUMP TABLES — SPECIALK.S (specialk = $d900)
+ * JUMP TABLES : SPECIALK.S (specialk = $d900)
  * Routines de gestion des inputs et du timing.
  * ----------------------------------------------------------------------- */
 extern void keys(void);
@@ -214,7 +214,7 @@ extern void strobe(void);
 
 
 /* -----------------------------------------------------------------------
- * JUMP TABLES — MOVER.S (mover = $ee00)
+ * JUMP TABLES : MOVER.S (mover = $ee00)
  * Routines d'animation des objets transitoires et mobiles.
  * ----------------------------------------------------------------------- */
 extern void animtrans(void);
@@ -239,7 +239,7 @@ extern void jampp(void);
 
 
 /* -----------------------------------------------------------------------
- * JUMP TABLES — CTRLSUBS.S (ctrlsubs = $d000)
+ * JUMP TABLES : CTRLSUBS.S (ctrlsubs = $d000)
  * Sous-routines de contrôle / utilitaires communs.
  * ----------------------------------------------------------------------- */
 extern void getframe(void);
@@ -313,7 +313,7 @@ extern void cmpwall(void);
 
 
 /* -----------------------------------------------------------------------
- * JUMP TABLES — SUBS.S (subs = $e000)
+ * JUMP TABLES : SUBS.S (subs = $e000)
  * Sous-routines diverses du jeu.
  * ----------------------------------------------------------------------- */
 extern void addtorches(void);
@@ -340,7 +340,7 @@ extern void crumble(void);
 
 
 /* -----------------------------------------------------------------------
- * JUMP TABLES — MISC.S (misc = $f900)
+ * JUMP TABLES : MISC.S (misc = $f900)
  * ----------------------------------------------------------------------- */
 extern void VanishChar(void);
 extern void movemusic(void);
@@ -381,7 +381,7 @@ extern uint8_t swordtab[SWORDTAB_SIZE];
 
 
 /* -----------------------------------------------------------------------
- * VARIABLES GLOBALES DE JEU — Zero page $40-$e7
+ * VARIABLES GLOBALES DE JEU : Zero page $40-$e7
  *
  * Sur Apple II, ces variables sont dans la zone zero page pour un accès
  * rapide (1 cycle au lieu de 3-4). En C, on les déclare globalement.
@@ -392,7 +392,7 @@ extern uint8_t swordtab[SWORDTAB_SIZE];
  * Kid et Shad sont les données permanentes du joueur et de son adversaire.
  * ----------------------------------------------------------------------- */
 
-/* Bloc de données d'un personnage — 16 octets */
+/* Bloc de données d'un personnage : 16 octets */
 typedef struct {
     uint8_t Posn;    /* frame # de la position courante */
     uint8_t X;       /* coordonnée X (système 140px) */
@@ -435,13 +435,13 @@ extern CharData Shad;   /* données permanentes de l'adversaire */
 
 #define KidPosn    Kid.Posn
 #define KidX       Kid.X
-/* etc. — pattern identique pour Kid et Shad */
+/* etc. : pattern identique pour Kid et Shad */
 
 /* Opponent (adversaire courant dans l'espace de travail) */
 /* Op est un alias vers la zone Op dans la page 2-3 ($320) */
 extern CharData Op;   /* espace de travail adversaire */
 
-/* FCharVars — données du "free character" (personnage libre) : 12 octets */
+/* FCharVars : données du "free character" (personnage libre) : 12 octets */
 typedef struct {
     uint8_t Image;
     uint8_t X[2];    /* 2 octets */
@@ -455,7 +455,7 @@ extern FCharVarsData FCharVars;
 
 
 /* -----------------------------------------------------------------------
- * VARIABLES GLOBALES — divers ($40 suite)
+ * VARIABLES GLOBALES : divers ($40 suite)
  * ----------------------------------------------------------------------- */
 extern uint8_t  yellowflag;
 extern uint8_t  timebomb;
@@ -545,7 +545,7 @@ extern uint8_t  droppedout;
 
 
 /* -----------------------------------------------------------------------
- * PAGES 2-3 — Variables de jeu supplémentaires
+ * PAGES 2-3 : Variables de jeu supplémentaires
  * ----------------------------------------------------------------------- */
 extern uint8_t  milestone;
 extern uint8_t  GlassState;
@@ -583,7 +583,7 @@ extern uint8_t  scrncolor;
 extern uint8_t  redoppmeter;
 extern uint8_t  timerequest;
 
-/* $320 — tableaux de collision detection */
+/* $320 : tableaux de collision detection */
 #define CD_SIZE 0x10
 extern uint8_t CDthisframe[CD_SIZE];
 extern uint8_t CDlastframe[CD_SIZE];
@@ -606,9 +606,9 @@ extern uint8_t  keybuf[KEYBUFLEN];
  * ----------------------------------------------------------------------- */
 
 /* Bits du frame check (Fcheck / Fcheckmark) */
-#define Fcheckmark  0x40   /* %01000000 — floor check requis */
-#define Fthinmark   0x20   /* %00100000 — frame "thin" pour collision */
-#define Ffootmark   0x1F   /* %00011111 — position X du pied (0-31) */
+#define Fcheckmark  0x40   /* %01000000 : floor check requis */
+#define Fthinmark   0x20   /* %00100000 : frame "thin" pour collision */
+#define Ffootmark   0x1F   /* %00011111 : position X du pied (0-31) */
 
 /* Dimensions physiques */
 #define floorheight  15    /* hauteur d'un bloc en pixels */
@@ -620,7 +620,7 @@ extern uint8_t  keybuf[KEYBUFLEN];
 #define UseLay       1     /* utiliser lay (complet) */
 #define UseLayrsave  2     /* utiliser layrsave (sauvegarde couche) */
 
-/* CharID values — identifiants des personnages */
+/* CharID values : identifiants des personnages */
 #define TypeKid      0
 #define TypeShad     1
 #define TypeGd       2     /* guard / vizier en jeu */
@@ -629,7 +629,7 @@ extern uint8_t  keybuf[KEYBUFLEN];
 #define TypeComix    5
 #define TypeFF       0x80  /* free-floating character */
 
-/* CharAction values — codes d'action */
+/* CharAction values : codes d'action */
 #define ACTION_DEAD    (-1)   /* mort */
 #define ACTION_STAND     0    /* debout immobile */
 #define ACTION_RUN       1    /* course / saut (nécessite sol sous les pieds) */

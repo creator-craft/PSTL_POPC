@@ -3,13 +3,17 @@
 
 /*
  * tables.h
- * Traduction de TABLES.S — Tables de lookup statiques
+ * Traduction de TABLES.S : Tables de lookup statiques
  * Source originale : Jordan Mechner, 1989
  * Module chargé à $e00 (main RAM) sur Apple II.
  *
  * Toutes ces tables sont des données constantes calculées à la
  * compilation. En C elles sont déclarées extern const et définies
  * dans tables.c (un seul fichier de définition).
+ * 
+ * Certaines tables présentes ici ne sont pas utiles en C :
+ *  - ByteTable et OffsetTable : utilisées pour l'adressage du framebuffer Apple II, inutiles avec SDL2
+ *  - Mult10, Mult7, Mult30 : tables de multiplication utilisées pour éviter les calculs en temps réel sur Apple II, inutiles en C
  *
  * Conventions de coordonnées rappelées ici car elles gouvernent
  * toutes les tables :
@@ -90,7 +94,7 @@ extern const uint8_t PixelTable[256];
 
 
 /* -----------------------------------------------------------------------
- * TABLES DE MULTIPLICATION
+ * TABLES DE MULTIPLICATION : INUTILES EN C (presents ici pour ré)
  * ----------------------------------------------------------------------- */
 
 /*
@@ -115,7 +119,7 @@ extern const uint8_t Mult10[16];
 extern const uint8_t Mult7[16];
 
 /*
- * Mult30[32] — table 16 bits (uint16_t)
+ * Mult30[32] : table 16 bits (uint16_t)
  * Index  : numéro d'écran (0-31)
  * Retour : offset en octets dans le blueprint (valeur × 30)
  *

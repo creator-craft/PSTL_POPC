@@ -1,6 +1,6 @@
 /*
  * tables.c
- * Traduction de TABLES.S — Définition des tables de lookup
+ * Traduction de TABLES.S : Définition des tables de lookup
  * Source originale : Jordan Mechner, 1989
  *
  * Ces tables sont entièrement calculées à la compilation.
