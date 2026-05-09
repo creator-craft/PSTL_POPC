@@ -1,14 +1,16 @@
 # Project configuration
-SRC_DIR     := src
-INC_DIR     := include
-BUILD_DIR   := build
-TARGET      := $(BUILD_DIR)/app
+SRC_DIR       := src
+INC_DIR       := include
+BUILD_DIR     := build
+TARGET        := $(BUILD_DIR)/app
+IMAGES_TARGET := $(BUILD_DIR)/read_images
 
 CC          := gcc
 SDL_CFLAGS  := $(shell sdl2-config --cflags)
 SDL_LIBS    := -lSDL2
 
 # Source and object files
+IMAGES_SRCS := src/POP_utils/read_images.c
 SRCS        := $(wildcard src/POP_SDL/*.c)
 OBJS        := $(SRCS:src/*/%.c=src/*/%.o)
 
@@ -50,6 +52,10 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)
 # Build directory
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
+
+# Read images
+images: $(BUILD_DIR)
+	$(CC) $(CFLAGS) $(IMAGES_SRCS) -o $(IMAGES_TARGET) $(LDFLAGS) -lSDL2_image
 
 # Clean
 .PHONY: clean
