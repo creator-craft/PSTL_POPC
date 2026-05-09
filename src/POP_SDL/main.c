@@ -64,7 +64,6 @@ void renderColoredScreen(SDL_Surface *surface) {
   uint32_t *pixels = (uint32_t *)surface->pixels;
 
   static const float w[7] = {0.05f, 0.10f, 0.20f, 0.30f, 0.20f, 0.10f, 0.05f};
-  // static const float w[5] = {0.10f, 0.20f, 0.40f, 0.20f, 0.10f};
 
   for (int j = 0; j < 192; j++) {
     const int row_off = (j * 320) / 8;
@@ -76,7 +75,6 @@ void renderColoredScreen(SDL_Surface *surface) {
       int p = (b >> 7) & 1;
       for (int k = 0; k < 7; k++) {
         int idx = i * 7 + k + 3;
-        // int idx = i * 7 + k + 2;
         sig[idx] = (b >> k) & 1 ? 1.0f : 0.0f;
         pal[idx] = p;
       }
@@ -85,7 +83,6 @@ void renderColoredScreen(SDL_Surface *surface) {
     for (int x = 0; x < 280; x++) {
       float Y = 0.0f, I = 0.0f, Q = 0.0f;
       for (int t = 0; t < 7; t++) {
-        // for (int t = 0; t < 5; t++) {
         int idx = x + t;
         int col = x + t - 3;
         float s = sig[idx];
@@ -118,7 +115,7 @@ void renderBnWScreen(SDL_Surface *surface) {
     for (int i = 0; i < 280 / 7; i++)
       for (int k = 0; k < 7; k++)
         pixels[j * 280 + i * 7 + k] =
-            screen[(j * 320) / 8 + i] & (1 << (k)) ? 0xFFFFFFFF : 0xFF000000;
+            screen[(j * 320) / 8 + i] & (1 << k) ? 0xFFFFFFFF : 0xFF000000;
   SDL_UnlockSurface(surface);
 }
 
@@ -132,6 +129,7 @@ void updateScreen(SDL_Surface *apple_screen_surface,
   // drawTest();
 
   renderColoredScreen(apple_screen_surface);
+  // renderBnWScreen(apple_screen_surface);
 
   SDL_BlitScaled(apple_screen_surface, NULL, screen_surface, &screen_rect);
 }
@@ -155,8 +153,7 @@ int main() {
     return -1;
 
   SDL_Window *window =
-      SDL_CreateWindow("Prince Of Persia", 0, 0, 280 * 4, 192 * 4,
-                       0); // SDL_WINDOW_MAXIMIZED
+      SDL_CreateWindow("Prince Of Persia", 0, 0, 280 * 4, 192 * 4, 0);
   if (window == NULL) {
     SDL_Quit();
     return -1;

@@ -241,7 +241,7 @@ void drawBlock(Level *lvl, int screen_idx, int col, int row) {
   drawc(col, blockxco, Dy, objid);
   drawb(blockxco, Dy, objid);
   drawmb(blockxco, Dy, objid);
-  drawd(blockxco, Dy - 1, objid, state);
+  drawd(blockxco, Dy + 1, objid, state);
   drawa(blockxco, Dy, objid);
   drawma(blockxco, Dy, objid);
   drawfrnt(blockxco, Dy - 3, objid, state);
